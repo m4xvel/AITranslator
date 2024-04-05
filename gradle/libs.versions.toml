@@ -10,6 +10,7 @@ activityCompose = "1.8.2"
 composeBom = "2024.04.00"
 openaiClient = "3.7.1"
 ktorVersion = "2.3.9"
+koinVersion = "3.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +29,9 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 openai-client = { module = "com.aallam.openai:openai-client", version.ref = "openaiClient" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorVersion" }
+koin-core = {  module = "io.insert-koin:koin-core", version.ref = "koinVersion" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinVersion" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
