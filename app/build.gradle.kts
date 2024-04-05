@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -6,6 +8,10 @@ plugins {
 android {
     namespace = "com.m4xvel.aitranslator"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "com.m4xvel.aitranslator"
@@ -18,6 +24,18 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val keystoreFile = project.rootProject.file("apikeys.properties")
+        val Properties = Properties()
+        Properties.load(keystoreFile.inputStream())
+
+        val openaiApiKey = Properties.getProperty("OPENAI_API_KEY") ?: ""
+
+        buildConfigField(
+            type = "String",
+            name = "OPENAI_API_KEY",
+            value = openaiApiKey
+        )
     }
 
     buildTypes {
@@ -50,6 +68,9 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.openai.client)
+    implementation(libs.ktor.client.android)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
