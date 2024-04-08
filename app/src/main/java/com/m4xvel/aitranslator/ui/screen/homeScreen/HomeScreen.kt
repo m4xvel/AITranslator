@@ -19,19 +19,19 @@ fun HomeScreen(viewModel: HomeScreenViewModel = koinViewModel()) {
     val transferTextState by viewModel.transferTextState.collectAsState()
     AITranslatorTheme {
         Box(modifier = Modifier.fillMaxSize()) {
-            TranslationPanel()
+            TranslationPanel(viewModel = viewModel)
         }
     }
 }
 
 @Composable
-private fun TranslationPanel() {
+private fun TranslationPanel(viewModel: HomeScreenViewModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 5.dp, end = 5.dp, top = 20.dp)
     ) {
-        LanguageSelectionPanel()
+        LanguageSelectionPanel(viewModel = viewModel)
     }
 }
 

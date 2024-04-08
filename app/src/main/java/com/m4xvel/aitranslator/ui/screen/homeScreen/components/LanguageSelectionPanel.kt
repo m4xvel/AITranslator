@@ -25,15 +25,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.m4xvel.aitranslator.R
+import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreenViewModel
 import com.m4xvel.aitranslator.ui.theme.SecondaryColor
 
-@Preview(showBackground = true)
 @Composable
-fun LanguageSelectionPanel() {
+fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -43,7 +43,12 @@ fun LanguageSelectionPanel() {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         CompositionLocalProvider(LocalRippleTheme provides ChangedRippleThemeAlpha) {
-            LanguageItem(shapeTopStart = 10, shapeTopEnd = 0, text = "Русский")
+            LanguageItem(
+                onClick = { },
+                shapeTopStart = 10,
+                shapeTopEnd = 0,
+                text = viewModel.getCurrentLanguage()
+            )
             IconButton(
                 onClick = { /*TODO*/ }
             ) {
@@ -53,19 +58,24 @@ fun LanguageSelectionPanel() {
                     tint = Color.White
                 )
             }
-            LanguageItem(shapeTopStart = 0, shapeTopEnd = 10, text = "Английский")
+            LanguageItem(
+                onClick = { },
+                shapeTopStart = 0,
+                shapeTopEnd = 10,
+                text = stringResource(id = R.string.language_english)
+            )
         }
     }
 }
 
 @Composable
-private fun LanguageItem(shapeTopStart: Int, shapeTopEnd: Int, text: String) {
+private fun LanguageItem(onClick: () -> Unit, shapeTopStart: Int, shapeTopEnd: Int, text: String) {
     Box(
         modifier = Modifier.width(170.dp),
         contentAlignment = Alignment.Center
     ) {
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = onClick,
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(
                 topStart = shapeTopStart.dp,

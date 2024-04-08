@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_chinese">中文</string>
+    <string name="language_spanish">西班牙语</string>
+    <string name="language_french">法语</string>
+    <string name="language_german">德语</string>
+    <string name="language_russian">俄语</string>
+    <string name="language_japanese">日语</string>
+    <string name="language_portuguese">葡萄牙语</string>
+    <string name="language_italian">意大利语</string>
+    <string name="language_korean">韩语</string>
+    <string name="language_english">英语</string>
+</resources>
