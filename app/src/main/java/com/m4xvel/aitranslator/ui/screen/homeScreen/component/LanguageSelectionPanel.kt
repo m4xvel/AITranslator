@@ -1,4 +1,4 @@
-package com.m4xvel.aitranslator.ui.screen.homeScreen.components
+package com.m4xvel.aitranslator.ui.screen.homeScreen.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +36,9 @@ import com.m4xvel.aitranslator.ui.theme.SecondaryColor
 
 @Composable
 fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
+
+    val state by viewModel.state.collectAsState()
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +52,7 @@ fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
                 onClick = { },
                 shapeTopStart = 10,
                 shapeTopEnd = 0,
-                text = viewModel.getCurrentLanguage()
+                text = state.currentLanguage.toString()
             )
             IconButton(
                 onClick = { /*TODO*/ }

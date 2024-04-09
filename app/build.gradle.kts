@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.sqldelight)
 }
 
 android {
@@ -67,6 +68,14 @@ android {
     }
 }
 
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.m4xvel.aitranslator.db")
+        }
+    }
+}
+
 dependencies {
 
     implementation(libs.openai.client)
@@ -74,6 +83,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.android.driver)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

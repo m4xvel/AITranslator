@@ -1,0 +1,20 @@
+CREATE TABLE Database (
+    id INTEGER PRIMARY KEY,
+    currentLanguage TEXT,
+    translationLanguage TEXT
+);
+
+insertLanguage:
+INSERT OR REPLACE
+INTO Database(
+    id,
+    currentLanguage
+) VALUES (1, ?);
+
+selectCurrentLanguage:
+SELECT currentLanguage
+FROM Database;
+
+selectTranslationLanguage:
+SELECT translationLanguage
+FROM Database;
