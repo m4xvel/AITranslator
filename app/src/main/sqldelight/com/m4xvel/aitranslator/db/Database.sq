@@ -8,8 +8,9 @@ insertLanguage:
 INSERT OR REPLACE
 INTO Database(
     id,
-    currentLanguage
-) VALUES (1, ?);
+    currentLanguage,
+    translationLanguage
+) VALUES (1, ?, ?);
 
 selectCurrentLanguage:
 SELECT currentLanguage

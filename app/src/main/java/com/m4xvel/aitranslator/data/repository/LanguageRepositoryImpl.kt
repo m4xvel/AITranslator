@@ -10,9 +10,10 @@ class LanguageRepositoryImpl(context: Context) : LanguageRepository {
     private val database = Database(AndroidSqliteDriver(Database.Schema, context, "database.db"))
 
     private val queries = database.databaseQueries
-    override suspend fun insertLanguage(currentLanguage: String?) {
+    override suspend fun insertLanguage(currentLanguage: String?, translationLanguage: String?) {
         queries.insertLanguage(
-            currentLanguage = currentLanguage
+            currentLanguage = currentLanguage,
+            translationLanguage = translationLanguage
         )
     }
 
@@ -21,6 +22,6 @@ class LanguageRepositoryImpl(context: Context) : LanguageRepository {
     }
 
     override suspend fun selectTranslationLanguage(): String? {
-        return queries.selectCurrentLanguage().executeAsOneOrNull()?.currentLanguage
+        return queries.selectTranslationLanguage().executeAsOneOrNull()?.translationLanguage
     }
 }

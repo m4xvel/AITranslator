@@ -22,7 +22,7 @@ class HomeScreenViewModel(
     val state: StateFlow<DataState> = _state.asStateFlow()
 
     init {
-        getCurrentLanguage()
+        getLanguage()
     }
 
     private fun showTransfer() {
@@ -30,8 +30,8 @@ class HomeScreenViewModel(
             _state.update {
                 it.copy(
                     transferText = transferRepository.getTransfer(
-                        "English",
-                        "Russian",
+                        "${_state.value.currentLanguage}",
+                        "${_state.value.translationLanguage}",
                         "The only way to do great work is to love what you do."
                     ).toString()
                 )
@@ -39,16 +39,59 @@ class HomeScreenViewModel(
         }
     }
 
-    private fun getCurrentLanguage() {
+    private fun saveLanguage() {
+        viewModelScope.launch {
+            languageRepository.insertLanguage(
+                _state.value.currentLanguageKey,
+                _state.value.translationLanguageKey
+            )
+        }
+    }
+
+    private fun getLanguage() {
         viewModelScope.launch {
             val currentLanguage: String? = languageRepository.selectCurrentLanguage()
-            if (currentLanguage != null) {
-                _state.update { it.copy(currentLanguage = currentLanguage) }
-                languageRepository.insertLanguage(_state.value.currentLanguage)
+            val translationLanguage: String? = languageRepository.selectTranslationLanguage()
+            if (currentLanguage != null && translationLanguage != null) {
+                _state.update {
+                    it.copy(
+                        currentLanguageKey = currentLanguage,
+                        currentLanguage = loadDefaultLanguage.getLocaleLanguage(
+                            currentLanguage
+                        ),
+                        translationLanguageKey = translationLanguage,
+                        translationLanguage = loadDefaultLanguage.getLocaleLanguage(
+                            translationLanguage
+                        )
+                    )
+                }
             } else {
-                _state.update { it.copy(currentLanguage = loadDefaultLanguage.loadDefaultLanguage()) }
-                languageRepository.insertLanguage(_state.value.currentLanguage)
+                _state.update {
+                    it.copy(
+                        currentLanguageKey = loadDefaultLanguage.getDefaultCurrentLanguage(),
+                        currentLanguage = loadDefaultLanguage.getLocaleLanguage(
+                            loadDefaultLanguage.getDefaultCurrentLanguage()
+                        ),
+                        translationLanguageKey = loadDefaultLanguage.getDefaultTranslationLanguage(),
+                        translationLanguage = loadDefaultLanguage.getLocaleLanguage(
+                            loadDefaultLanguage.getDefaultTranslationLanguage()
+                        )
+                    )
+                }
             }
         }
+        saveLanguage()
+    }
+
+    fun swapLanguage() {
+        _state.update {
+            it.copy(
+                currentLanguageKey = _state.value.translationLanguageKey,
+                currentLanguage = loadDefaultLanguage.getLocaleLanguage(_state.value.translationLanguageKey!!),
+                translationLanguageKey = _state.value.currentLanguageKey,
+                translationLanguage = loadDefaultLanguage.getLocaleLanguage(_state.value.currentLanguageKey!!)
+            )
+        }
+        saveLanguage()
     }
 }

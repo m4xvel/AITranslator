@@ -55,7 +55,7 @@ fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
                 text = state.currentLanguage.toString()
             )
             IconButton(
-                onClick = { /*TODO*/ }
+                onClick = { viewModel.swapLanguage() }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_change),
@@ -67,7 +67,7 @@ fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
                 onClick = { },
                 shapeTopStart = 0,
                 shapeTopEnd = 10,
-                text = stringResource(id = R.string.language_english)
+                text = state.translationLanguage.toString()
             )
         }
     }
