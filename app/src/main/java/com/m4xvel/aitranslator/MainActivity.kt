@@ -3,13 +3,26 @@ package com.m4xvel.aitranslator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreen
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.m4xvel.aitranslator.ui.navigation.AppNavHost
+import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeScreen()
+            AITranslatorTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    AppNavHost(navController = rememberNavController())
+                }
+            }
         }
     }
 }

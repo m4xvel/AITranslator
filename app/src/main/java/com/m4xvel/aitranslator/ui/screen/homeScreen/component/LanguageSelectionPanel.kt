@@ -27,15 +27,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.m4xvel.aitranslator.R
+import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreenViewModel
 import com.m4xvel.aitranslator.ui.theme.SecondaryColor
 
 @Composable
-fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
+fun LanguageSelectionPanel(
+    navController: NavController,
+    viewModel: HomeScreenViewModel
+) {
 
     val state by viewModel.state.collectAsState()
 
@@ -49,7 +53,9 @@ fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
     ) {
         CompositionLocalProvider(LocalRippleTheme provides ChangedRippleThemeAlpha) {
             LanguageItem(
-                onClick = { },
+                onClick = {
+                    navController.navigate("${Screen.LANGUAGE_SELECTION.name}/Исходный язык")
+                },
                 shapeTopStart = 10,
                 shapeTopEnd = 0,
                 text = state.currentLanguage.toString()
@@ -64,7 +70,9 @@ fun LanguageSelectionPanel(viewModel: HomeScreenViewModel) {
                 )
             }
             LanguageItem(
-                onClick = { },
+                onClick = {
+                    navController.navigate("${Screen.LANGUAGE_SELECTION.name}/Язык перевода")
+                },
                 shapeTopStart = 0,
                 shapeTopEnd = 10,
                 text = state.translationLanguage.toString()

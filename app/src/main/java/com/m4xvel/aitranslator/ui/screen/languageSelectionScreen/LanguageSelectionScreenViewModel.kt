@@ -6,8 +6,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class LanguageSelectionScreenViewModel: ViewModel() {
+class LanguageSelectionScreenViewModel : ViewModel() {
 
     private val _state = MutableStateFlow(DataLanguageState())
     val state: StateFlow<DataLanguageState> = _state.asStateFlow()
+
 }
