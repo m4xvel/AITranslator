@@ -12,6 +12,7 @@ openaiClient = "3.7.1"
 ktorVersion = "2.3.9"
 koinVersion = "3.2.0"
 sqldelightVersion = "2.0.2"
+navVersion = "2.7.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +35,8 @@ koin-core = {  module = "io.insert-koin:koin-core", version.ref = "koinVersion" 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinVersion" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinVersion" }
 android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelightVersion" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
