@@ -10,4 +10,7 @@
     <string name="language_italian">이탈리아어</string>
     <string name="language_korean">한국어</string>
     <string name="language_english">영어</string>
+
+    <string name="translate_from">에서 번역</string>
+    <string name="translate_to">로 번역</string>
 </resources>

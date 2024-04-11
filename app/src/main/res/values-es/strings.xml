@@ -10,4 +10,7 @@
     <string name="language_italian">Italiano</string>
     <string name="language_korean">Coreano</string>
     <string name="language_english">Inglés</string>
+
+    <string name="translate_from">Traducir de</string>
+    <string name="translate_to">Traducir a</string>
 </resources>

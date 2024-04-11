@@ -14,25 +14,45 @@ import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelecti
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.Home.route
+    startDestination: String = "${NavigationItem.Home.route}/{language}/{id}"
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(NavigationItem.Home.route) {
-            HomeScreen(navController = navController)
+        composable(
+            route = "${NavigationItem.Home.route}/{language}/{id}",
+            arguments = listOf(
+                navArgument("language") {
+                    type = NavType.StringType
+                },
+                navArgument("id") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            HomeScreen(
+                navController = navController,
+                text = backStackEntry.arguments?.getString("language"),
+                id = backStackEntry.arguments?.getInt("id")!!
+            )
         }
         composable(
-            "${NavigationItem.LanguageSelection.route}/{text}",
-            arguments = listOf(navArgument("text") {
-                type = NavType.StringType
-            })
+            route = "${NavigationItem.LanguageSelection.route}/{text}/{id}",
+            arguments = listOf(
+                navArgument("text") {
+                    type = NavType.StringType
+                },
+                navArgument("id") {
+                    type = NavType.IntType
+                }
+            )
         ) { backStackEntry ->
             LanguageSelectionScreen(
                 navController = navController,
-                text = backStackEntry.arguments?.getString("text")!!
+                text = backStackEntry.arguments?.getString("text")!!,
+                id = backStackEntry.arguments?.getInt("id")!!
             )
         }
     }

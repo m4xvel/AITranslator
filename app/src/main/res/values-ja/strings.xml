@@ -10,4 +10,7 @@
     <string name="language_italian">イタリア語</string>
     <string name="language_korean">韓国語</string>
     <string name="language_english">英語</string>
+
+    <string name="translate_from">から翻訳する</string>
+    <string name="translate_to">へ翻訳する</string>
 </resources>

@@ -16,12 +16,16 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(
     navController: NavController,
+    text: String?,
+    id: Int,
     viewModel: HomeScreenViewModel = koinViewModel()
 ) {
     AITranslatorTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             TranslationPanel(
                 navController = navController,
+                text = text,
+                id = id,
                 viewModel = viewModel
             )
         }
@@ -31,6 +35,8 @@ fun HomeScreen(
 @Composable
 private fun TranslationPanel(
     navController: NavController,
+    text: String?,
+    id: Int,
     viewModel: HomeScreenViewModel
 ) {
     Column(
@@ -40,6 +46,8 @@ private fun TranslationPanel(
     ) {
         LanguageSelectionPanel(
             navController = navController,
+            text = text,
+            id = id,
             viewModel = viewModel
         )
     }

@@ -22,11 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -38,10 +42,18 @@ import com.m4xvel.aitranslator.ui.theme.SecondaryColor
 @Composable
 fun LanguageSelectionPanel(
     navController: NavController,
+    text: String?,
+    id: Int,
     viewModel: HomeScreenViewModel
 ) {
 
     val state by viewModel.state.collectAsState()
+
+    val languageFrom = stringResource(id = R.string.translate_from)
+    val languageTo = stringResource(id = R.string.translate_to)
+
+    val currentLanguageId by remember { mutableIntStateOf(1) }
+    val translationLanguageId by remember { mutableIntStateOf(2) }
 
     Row(
         modifier = Modifier
@@ -54,11 +66,11 @@ fun LanguageSelectionPanel(
         CompositionLocalProvider(LocalRippleTheme provides ChangedRippleThemeAlpha) {
             LanguageItem(
                 onClick = {
-                    navController.navigate("${Screen.LANGUAGE_SELECTION.name}/Исходный язык")
+                    navController.navigate("${Screen.LANGUAGE_SELECTION.name}/$languageFrom/$currentLanguageId")
                 },
                 shapeTopStart = 10,
                 shapeTopEnd = 0,
-                text = state.currentLanguage.toString()
+                text = if (text != null && id == 1) text else state.currentLanguage.toString()
             )
             IconButton(
                 onClick = { viewModel.swapLanguage() }
@@ -71,11 +83,11 @@ fun LanguageSelectionPanel(
             }
             LanguageItem(
                 onClick = {
-                    navController.navigate("${Screen.LANGUAGE_SELECTION.name}/Язык перевода")
+                    navController.navigate("${Screen.LANGUAGE_SELECTION.name}/$languageTo/$translationLanguageId")
                 },
                 shapeTopStart = 0,
                 shapeTopEnd = 10,
-                text = state.translationLanguage.toString()
+                text = if (text != null && id == 2) text else state.translationLanguage.toString()
             )
         }
     }

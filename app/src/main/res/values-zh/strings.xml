@@ -10,4 +10,7 @@
     <string name="language_italian">意大利语</string>
     <string name="language_korean">韩语</string>
     <string name="language_english">英语</string>
+
+    <string name="translate_from">从…翻译</string>
+    <string name="translate_to">翻译成</string>
 </resources>

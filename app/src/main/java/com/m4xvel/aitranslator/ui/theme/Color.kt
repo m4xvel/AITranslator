@@ -11,3 +11,5 @@ val LightSurface = Color(0xFFFFFFFF)
 
 val DarkBackground = Color(0xFF363636)
 val DarkSurface = Color(0xFF505050)
+
+val RippleColor = Color(0xFFBDBDBD)
