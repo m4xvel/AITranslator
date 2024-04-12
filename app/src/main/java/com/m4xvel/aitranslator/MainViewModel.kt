@@ -1,5 +1,6 @@
 package com.m4xvel.aitranslator
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
@@ -36,6 +37,7 @@ class MainViewModel(
                     ).toString()
                 )
             }
+            Log.d("!!!", "${_state.value.transferText}")
         }
     }
 
