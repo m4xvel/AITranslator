@@ -14,4 +14,5 @@
     <string name="translate_from">Traduire de</string>
     <string name="translate_to">Traduire en</string>
     <string name="search">Rechercher</string>
+    <string name="enter_text">Entrez du texte</string>
 </resources>

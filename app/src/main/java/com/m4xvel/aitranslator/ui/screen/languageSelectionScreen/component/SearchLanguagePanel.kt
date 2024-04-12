@@ -53,9 +53,9 @@ fun SearchLanguagePanel(
 
         BasicTextField(
             singleLine = true,
-            value = state.searchText,
+            value = state.searchLanguage,
             onValueChange = {
-                viewModel.setSearchText(it)
+                viewModel.setSearchLanguage(it)
             },
             modifier = Modifier
                 .fillMaxSize()
@@ -97,7 +97,7 @@ fun SearchLanguagePanel(
                             .padding(start = 15.dp),
                         contentAlignment = Alignment.CenterStart
                     ) {
-                        if (state.searchText.isEmpty()) {
+                        if (state.searchLanguage.isEmpty()) {
                             Text(
                                 text = stringResource(id = R.string.search),
                                 color = Color.Black,

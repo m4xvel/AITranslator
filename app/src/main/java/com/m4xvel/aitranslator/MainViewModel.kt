@@ -117,10 +117,18 @@ class MainViewModel(
         saveLanguage()
     }
 
-    fun setSearchText(text: String) {
+    fun setSearchLanguage(text: String) {
         _state.update {
             it.copy(
-                searchText = text
+                searchLanguage = text
+            )
+        }
+    }
+
+    fun setInputText(text: String) {
+        _state.update {
+            it.copy(
+                inputText = text
             )
         }
     }

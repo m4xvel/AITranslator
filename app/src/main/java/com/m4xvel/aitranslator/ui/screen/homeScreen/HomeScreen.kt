@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.ui.screen.homeScreen.component.CurrentTextPanel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.LanguageSelectionPanel
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
 
@@ -40,6 +41,9 @@ private fun TranslationPanel(
     ) {
         LanguageSelectionPanel(
             navController = navController,
+            viewModel = viewModel
+        )
+        CurrentTextPanel(
             viewModel = viewModel
         )
     }

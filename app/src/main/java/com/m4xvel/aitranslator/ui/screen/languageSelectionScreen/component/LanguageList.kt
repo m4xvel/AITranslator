@@ -42,7 +42,7 @@ fun LanguageList(
 
     val state by viewModel.state.collectAsState()
 
-    val languageFilter = language.filterValues { it.contains(state.searchText) }
+    val languageFilter = language.filterValues { it.contains(state.searchLanguage) }
 
     Column(
         modifier = Modifier

@@ -10,6 +10,9 @@ data class DataState(
     val leftButtonID: Int = 1,
     val rightButtonID: Int = 2,
 
+    val inputText: String = "",
+    val outputText: String? = null,
+
     //LanguageSelectionScreen
-    val searchText: String = ""
+    val searchLanguage: String = ""
 )
