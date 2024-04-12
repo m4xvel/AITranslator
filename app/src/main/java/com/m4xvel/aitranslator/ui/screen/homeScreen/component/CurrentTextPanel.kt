@@ -9,12 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -25,7 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
 import com.m4xvel.aitranslator.ui.theme.LightSurface
+import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
 fun CurrentTextPanel(
@@ -54,6 +56,9 @@ fun CurrentTextPanel(
             )
             .background(LightSurface)
     ) {
+
+        val fontSize = viewModel.decreaseFont()
+
         BasicTextField(
             singleLine = false,
             value = state.inputText,
@@ -65,16 +70,17 @@ fun CurrentTextPanel(
                 .height(149.dp),
             textStyle = TextStyle(
                 fontWeight = FontWeight.Normal,
-                fontSize = 24.sp,
+                fontSize = fontSize.sp,
                 color = Color.Black,
             ),
             decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 12.dp, start = 25.dp, end = 10.dp)
+                        .padding(top = 12.dp, start = 25.dp, end = 15.dp)
                 ) {
                     if (state.inputText.isEmpty()) {
+
                         Text(
                             text = "${stringResource(id = R.string.enter_text)}...",
                             color = Color.Black,
@@ -87,31 +93,55 @@ fun CurrentTextPanel(
                 }
             }
         )
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 6.dp),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.Bottom
-        ) {
-            IconButton(
-                modifier = Modifier.background(Color.Gray)
-                    .padding(end = 15.dp),
-                onClick = { /*TODO*/ }) {
-                Icon(
-                    modifier = Modifier.size(30.dp),
-                    imageVector = Icons.Default.Delete, contentDescription = "delete"
-                )
-            }
-            IconButton(
-                modifier = Modifier.background(Color.Gray)
-                    .padding(end = 20.dp),
-                onClick = { /*TODO*/ }) {
-                Icon(
-                    modifier = Modifier.size(30.dp),
-                    imageVector = Icons.Default.Add, contentDescription = "add"
-                )
-            }
-        }
+        BottomPanel(viewModel = viewModel)
     }
+}
+
+@Composable
+private fun BottomPanel(viewModel: MainViewModel) {
+
+    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .drawBehind {
+                val strokeWidth = 1.dp.toPx()
+                val y = size.height - strokeWidth / 2
+                drawLine(
+                    color = PrimaryColor,
+                    start = Offset(0f, y),
+                    end = Offset(size.width, y),
+                    strokeWidth = strokeWidth
+                )
+            },
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.Bottom,
+        content = {
+            IconButton(
+                onClick = { viewModel.deleteText() },
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete),
+                        contentDescription = "delete",
+                        tint = PrimaryColor
+                    )
+                }
+            )
+            IconButton(
+                onClick = {
+                    clipboardManager.getText()?.text?.let {
+                        viewModel.pasteText(it)
+                    }
+                },
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.paste),
+                        contentDescription = "paste",
+                        tint = PrimaryColor
+                    )
+                }
+            )
+        }
+    )
 }

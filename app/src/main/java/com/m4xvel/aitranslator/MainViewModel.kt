@@ -31,9 +31,9 @@ class MainViewModel(
             _state.update {
                 it.copy(
                     transferText = transferRepository.getTransfer(
-                        "${_state.value.currentLanguage}",
-                        "${_state.value.translationLanguage}",
-                        "The only way to do great work is to love what you do."
+                        sourceText = "${_state.value.currentLanguage}",
+                        translatedText = "${_state.value.translationLanguage}",
+                        text = _state.value.inputText
                     ).toString()
                 )
             }
@@ -136,4 +136,22 @@ class MainViewModel(
     fun getAllLanguages(): Map<String, String> {
         return defaultLanguageRepository.getAllLanguage()
     }
+
+    fun decreaseFont(): Int {
+        val textLength = _state.value.inputText.length
+        return when {
+            textLength <= 60 -> 24
+            textLength <= 140 -> 20
+            else -> 16
+        }
+    }
+
+    fun deleteText() {
+        _state.update { it.copy(inputText = "") }
+    }
+
+    fun pasteText(text: String) {
+        _state.update { it.copy(inputText = text) }
+    }
+
 }
