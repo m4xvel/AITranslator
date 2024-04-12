@@ -7,35 +7,29 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreen
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelectionScreen
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = "${NavigationItem.Home.route}/{language}/{id}"
+    startDestination: String = NavigationItem.Home.route,
+    viewModel: MainViewModel = koinViewModel()
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
     ) {
         composable(
-            route = "${NavigationItem.Home.route}/{language}/{id}",
-            arguments = listOf(
-                navArgument("language") {
-                    type = NavType.StringType
-                },
-                navArgument("id") {
-                    type = NavType.IntType
-                }
-            )
-        ) { backStackEntry ->
+            route = NavigationItem.Home.route,
+        ) {
             HomeScreen(
                 navController = navController,
-                text = backStackEntry.arguments?.getString("language"),
-                id = backStackEntry.arguments?.getInt("id")!!
+                viewModel = viewModel
             )
         }
         composable(
@@ -52,7 +46,8 @@ fun AppNavHost(
             LanguageSelectionScreen(
                 navController = navController,
                 text = backStackEntry.arguments?.getString("text")!!,
-                id = backStackEntry.arguments?.getInt("id")!!
+                id = backStackEntry.arguments?.getInt("id")!!,
+                viewModel = viewModel
             )
         }
     }

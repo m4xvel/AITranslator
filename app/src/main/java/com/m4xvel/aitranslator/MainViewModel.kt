@@ -1,20 +1,20 @@
-package com.m4xvel.aitranslator.ui.screen.homeScreen
+package com.m4xvel.aitranslator
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
-import com.m4xvel.aitranslator.ui.screen.homeScreen.model.DataState
-import com.m4xvel.aitranslator.ui.screen.util.LoadDefaultLanguage
+import com.m4xvel.aitranslator.ui.model.DataState
+import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel(
+class MainViewModel(
     private val transferRepository: TransferRepository,
-    private val loadDefaultLanguage: LoadDefaultLanguage,
+    private val defaultLanguageRepository: DefaultLanguageRepository,
     private val languageRepository: LanguageRepository
 ) : ViewModel() {
 
@@ -56,11 +56,11 @@ class HomeScreenViewModel(
                 _state.update {
                     it.copy(
                         currentLanguageKey = currentLanguage,
-                        currentLanguage = loadDefaultLanguage.getLocaleLanguage(
+                        currentLanguage = defaultLanguageRepository.getLocaleLanguage(
                             currentLanguage
                         ),
                         translationLanguageKey = translationLanguage,
-                        translationLanguage = loadDefaultLanguage.getLocaleLanguage(
+                        translationLanguage = defaultLanguageRepository.getLocaleLanguage(
                             translationLanguage
                         )
                     )
@@ -68,13 +68,13 @@ class HomeScreenViewModel(
             } else {
                 _state.update {
                     it.copy(
-                        currentLanguageKey = loadDefaultLanguage.getDefaultCurrentLanguage(),
-                        currentLanguage = loadDefaultLanguage.getLocaleLanguage(
-                            loadDefaultLanguage.getDefaultCurrentLanguage()
+                        currentLanguageKey = defaultLanguageRepository.getDefaultCurrentLanguage(),
+                        currentLanguage = defaultLanguageRepository.getLocaleLanguage(
+                            defaultLanguageRepository.getDefaultCurrentLanguage()
                         ),
-                        translationLanguageKey = loadDefaultLanguage.getDefaultTranslationLanguage(),
-                        translationLanguage = loadDefaultLanguage.getLocaleLanguage(
-                            loadDefaultLanguage.getDefaultTranslationLanguage()
+                        translationLanguageKey = defaultLanguageRepository.getDefaultTranslationLanguage(),
+                        translationLanguage = defaultLanguageRepository.getLocaleLanguage(
+                            defaultLanguageRepository.getDefaultTranslationLanguage()
                         )
                     )
                 }
@@ -87,11 +87,43 @@ class HomeScreenViewModel(
         _state.update {
             it.copy(
                 currentLanguageKey = _state.value.translationLanguageKey,
-                currentLanguage = loadDefaultLanguage.getLocaleLanguage(_state.value.translationLanguageKey!!),
+                currentLanguage = defaultLanguageRepository.getLocaleLanguage(_state.value.translationLanguageKey!!),
                 translationLanguageKey = _state.value.currentLanguageKey,
-                translationLanguage = loadDefaultLanguage.getLocaleLanguage(_state.value.currentLanguageKey!!)
+                translationLanguage = defaultLanguageRepository.getLocaleLanguage(_state.value.currentLanguageKey!!)
             )
         }
         saveLanguage()
+    }
+
+    fun updateCurrentLanguage(languageKey: String?) {
+        _state.update {
+            it.copy(
+                currentLanguageKey = languageKey,
+                currentLanguage = defaultLanguageRepository.getLocaleLanguage(languageKey!!),
+            )
+        }
+        saveLanguage()
+    }
+
+    fun updateTranslationLanguage(languageKey: String?) {
+        _state.update {
+            it.copy(
+                translationLanguageKey = languageKey,
+                translationLanguage = defaultLanguageRepository.getLocaleLanguage(languageKey!!),
+            )
+        }
+        saveLanguage()
+    }
+
+    fun setSearchText(text: String) {
+        _state.update {
+            it.copy(
+                searchText = text
+            )
+        }
+    }
+
+    fun getAllLanguages(): Map<String, String> {
+        return defaultLanguageRepository.getAllLanguage()
     }
 }

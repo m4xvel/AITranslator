@@ -16,21 +16,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.m4xvel.aitranslator.ui.navigation.NavigationItem
+import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.theme.RippleColor
 
 @Composable
 fun LanguageList(
-    language: List<String>,
+    language: Map<String, String>,
     id: Int,
-    navController: NavController
+    navController: NavController,
+    viewModel: MainViewModel
 ) {
+
+    val state by viewModel.state.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -43,7 +49,12 @@ fun LanguageList(
                     .fillMaxWidth()
                     .height(41.dp)
                     .clickable {
-                        navController.navigate("${Screen.HOME.name}/$language/$id") {
+                        if (id == state.leftButtonID) {
+                            viewModel.updateCurrentLanguage(languageKey = language.key)
+                        } else {
+                            viewModel.updateTranslationLanguage(languageKey = language.key)
+                        }
+                        navController.navigate(Screen.HOME.name) {
                             popUpTo(0)
                         }
                     },
@@ -52,7 +63,7 @@ fun LanguageList(
                 CompositionLocalProvider(LocalRippleTheme provides ChangedRippleThemeAlpha) {
                     Text(
                         modifier = Modifier.padding(start = 38.dp),
-                        text = language,
+                        text = language.value,
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }

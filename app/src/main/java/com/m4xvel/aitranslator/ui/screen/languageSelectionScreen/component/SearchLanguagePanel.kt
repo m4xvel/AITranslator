@@ -27,16 +27,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelectionScreenViewModel
+import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.R
 import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
 fun SearchLanguagePanel(
-    viewModel: LanguageSelectionScreenViewModel
+    viewModel: MainViewModel
 ) {
 
     Box(
@@ -97,7 +99,7 @@ fun SearchLanguagePanel(
                     ) {
                         if (state.searchText.isEmpty()) {
                             Text(
-                                text = "Поиск",
+                                text = stringResource(id = R.string.search),
                                 color = Color.Black,
                                 fontSize = 20.sp,
                                 modifier = Modifier.alpha(0.7f)

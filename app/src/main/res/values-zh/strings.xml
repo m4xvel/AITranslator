@@ -13,4 +13,5 @@
 
     <string name="translate_from">从…翻译</string>
     <string name="translate_to">翻译成</string>
+    <string name="search">搜索</string>
 </resources>

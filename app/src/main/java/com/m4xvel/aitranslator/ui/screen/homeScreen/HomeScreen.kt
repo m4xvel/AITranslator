@@ -9,23 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.LanguageSelectionPanel
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    text: String?,
-    id: Int,
-    viewModel: HomeScreenViewModel = koinViewModel()
+    viewModel: MainViewModel
 ) {
     AITranslatorTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             TranslationPanel(
                 navController = navController,
-                text = text,
-                id = id,
                 viewModel = viewModel
             )
         }
@@ -35,9 +31,7 @@ fun HomeScreen(
 @Composable
 private fun TranslationPanel(
     navController: NavController,
-    text: String?,
-    id: Int,
-    viewModel: HomeScreenViewModel
+    viewModel: MainViewModel
 ) {
     Column(
         modifier = Modifier
@@ -46,8 +40,6 @@ private fun TranslationPanel(
     ) {
         LanguageSelectionPanel(
             navController = navController,
-            text = text,
-            id = id,
             viewModel = viewModel
         )
     }

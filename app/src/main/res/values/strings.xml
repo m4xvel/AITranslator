@@ -14,4 +14,5 @@
     
     <string name="translate_from">Перевести с</string>
     <string name="translate_to">Перевести на</string>
+    <string name="search">Поиск</string>
 </resources>
