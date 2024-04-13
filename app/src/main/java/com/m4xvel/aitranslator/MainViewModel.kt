@@ -7,6 +7,7 @@ import com.m4xvel.aitranslator.domain.repository.LanguageRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
 import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,18 +27,36 @@ class MainViewModel(
         getLanguage()
     }
 
-    private fun showTransfer() {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    transferText = transferRepository.getTransfer(
-                        sourceText = "${_state.value.currentLanguage}",
-                        translatedText = "${_state.value.translationLanguage}",
-                        text = _state.value.inputText
-                    ).toString()
-                )
+    fun showTransfer() {
+        if (_state.value.inputText.isNotEmpty()) {
+            try {
+                viewModelScope.launch {
+                    runAnimation(true)
+                    delay(600)
+                    /*_state.update {
+                        it.copy(
+                            transferText = transferRepository.getTransfer(
+                                sourceText = "${_state.value.currentLanguage}",
+                                translatedText = "${_state.value.translationLanguage}",
+                                text = _state.value.inputText
+                            ).toString()
+                        )
+                    }*/
+                    runAnimation(false)
+                    Log.d("!!!", "${_state.value.transferText}")
+                }
+            } catch (e: Exception) {
+                Log.d("!!!", "Произошла ошибка: ${e.message}")
+                runAnimation(false)
             }
-            Log.d("!!!", "${_state.value.transferText}")
+        }
+    }
+
+    private fun runAnimation(start: Boolean) {
+        _state.update {
+            it.copy(
+                isPlaying = start
+            )
         }
     }
 

@@ -13,6 +13,9 @@ data class DataState(
     val inputText: String = "",
     val outputText: String? = null,
 
+    //Animation
+    val isPlaying: Boolean = false,
+
     //LanguageSelectionScreen
     val searchLanguage: String = ""
 )

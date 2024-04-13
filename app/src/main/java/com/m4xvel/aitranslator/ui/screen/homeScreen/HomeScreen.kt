@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.ui.animation.TranslateButton
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.CurrentTextPanel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.LanguageSelectionPanel
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
@@ -34,6 +37,9 @@ private fun TranslationPanel(
     navController: NavController,
     viewModel: MainViewModel
 ) {
+
+    val state by viewModel.state.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,6 +51,12 @@ private fun TranslationPanel(
         )
         CurrentTextPanel(
             viewModel = viewModel
+        )
+        TranslateButton(
+            isPlaying = state.isPlaying,
+            onClick = {
+                viewModel.showTransfer()
+            }
         )
     }
 }
