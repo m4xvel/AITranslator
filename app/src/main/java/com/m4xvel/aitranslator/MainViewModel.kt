@@ -32,8 +32,7 @@ class MainViewModel(
             try {
                 viewModelScope.launch {
                     runAnimation(true)
-                    delay(600)
-                    /*_state.update {
+                    _state.update {
                         it.copy(
                             transferText = transferRepository.getTransfer(
                                 sourceText = "${_state.value.currentLanguage}",
@@ -41,7 +40,8 @@ class MainViewModel(
                                 text = _state.value.inputText
                             ).toString()
                         )
-                    }*/
+                    }
+                    showTranslationTextPanel()
                     runAnimation(false)
                     Log.d("!!!", "${_state.value.transferText}")
                 }
@@ -57,6 +57,16 @@ class MainViewModel(
             it.copy(
                 isPlaying = start
             )
+        }
+    }
+
+    private fun showTranslationTextPanel() {
+        if (_state.value.inputText.isNotEmpty()) {
+            _state.update {
+                it.copy(
+                    showTranslationTextPanel = true
+                )
+            }
         }
     }
 
@@ -172,5 +182,7 @@ class MainViewModel(
     fun pasteText(text: String) {
         _state.update { it.copy(inputText = text) }
     }
+
+
 
 }

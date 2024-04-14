@@ -15,6 +15,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -26,6 +27,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -43,6 +45,13 @@ fun CurrentTextPanel(
 ) {
 
     val state by viewModel.state.collectAsState()
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(state.inputText) {
+        if (state.inputText.isEmpty()) {
+            keyboardController?.show()
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -50,8 +59,8 @@ fun CurrentTextPanel(
             .height(185.dp)
             .clip(
                 RoundedCornerShape(
-                    bottomStart = 10.dp,
-                    bottomEnd = 10.dp
+                    bottomStart = if (state.showTranslationTextPanel) 0.dp else 10.dp,
+                    bottomEnd = if (state.showTranslationTextPanel) 0.dp else 10.dp
                 )
             )
             .background(LightSurface)

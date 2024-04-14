@@ -15,6 +15,7 @@ import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.animation.TranslateButton
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.CurrentTextPanel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.LanguageSelectionPanel
+import com.m4xvel.aitranslator.ui.screen.homeScreen.component.TranslationTextPanel
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
 
 @Composable
@@ -58,6 +59,11 @@ private fun TranslationPanel(
                 viewModel.showTransfer()
             }
         )
+        if (state.showTranslationTextPanel) {
+            TranslationTextPanel(
+                viewModel = viewModel
+            )
+        }
     }
 }
 

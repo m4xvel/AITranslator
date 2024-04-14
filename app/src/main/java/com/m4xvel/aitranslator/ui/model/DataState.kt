@@ -11,10 +11,11 @@ data class DataState(
     val rightButtonID: Int = 2,
 
     val inputText: String = "",
-    val outputText: String? = null,
 
     //Animation
     val isPlaying: Boolean = false,
+
+    val showTranslationTextPanel: Boolean = false,
 
     //LanguageSelectionScreen
     val searchLanguage: String = ""
