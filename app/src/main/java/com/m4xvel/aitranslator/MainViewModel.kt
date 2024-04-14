@@ -1,13 +1,15 @@
 package com.m4xvel.aitranslator
 
 import android.util.Log
+import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
 import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -180,9 +182,16 @@ class MainViewModel(
     }
 
     fun pasteText(text: String) {
-        _state.update { it.copy(inputText = text) }
+        _state.update {
+            it.copy(
+                inputText = it.inputText + text
+            )
+        }
     }
 
-
-
+    fun isKeyboardVisible(view: View) {
+        val isKeyboardOpen = ViewCompat.getRootWindowInsets(view)
+            ?.isVisible(WindowInsetsCompat.Type.ime()) ?: true
+        _state.update { it.copy(isKeyboardVisible = isKeyboardOpen) }
+    }
 }

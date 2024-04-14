@@ -39,9 +39,8 @@ fun TranslateButton(
         composition = composition,
         clipSpec = clipSpec,
         isPlaying = isPlaying,
-        iterations = iterations,
-
-        )
+        iterations = iterations
+    )
 
     if (progress == 0.5f) {
         clipSpec = LottieClipSpec.Progress(min = 0.55f, max = 1f)

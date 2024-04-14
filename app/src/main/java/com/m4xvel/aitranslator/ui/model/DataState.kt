@@ -11,6 +11,7 @@ data class DataState(
     val rightButtonID: Int = 2,
 
     val inputText: String = "",
+    val isKeyboardVisible: Boolean = false,
 
     //Animation
     val isPlaying: Boolean = false,

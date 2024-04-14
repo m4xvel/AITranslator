@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,12 +35,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
+import com.m4xvel.aitranslator.ui.screen.util.KeyboardListener
 import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
 fun SearchLanguagePanel(
     viewModel: MainViewModel
 ) {
+
+    KeyboardListener(viewModel)
 
     Box(
         modifier = Modifier
@@ -110,7 +114,10 @@ fun SearchLanguagePanel(
                 }
             },
             enabled = enabled,
-            maxLines = 1
+            maxLines = 1,
+            cursorBrush = if (!state.isKeyboardVisible) SolidColor(Color.Unspecified) else SolidColor(
+                Color.Black
+            )
         )
     }
 }
