@@ -18,6 +18,7 @@ import com.m4xvel.aitranslator.ui.animation.TranslateButton
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.CurrentTextPanel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.LanguageSelectionPanel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.TranslationTextPanel
+import com.m4xvel.aitranslator.ui.screen.util.StatusBarColor
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
 
 @Composable
@@ -25,6 +26,7 @@ fun HomeScreen(
     navController: NavController,
     viewModel: MainViewModel
 ) {
+    StatusBarColor(navController = navController)
     AITranslatorTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             TranslationPanel(
