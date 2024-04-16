@@ -1,7 +1,6 @@
 package com.m4xvel.aitranslator.ui.screen.homeScreen
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,10 +23,6 @@ import com.m4xvel.aitranslator.ui.screen.homeScreen.component.TranslationTextPan
 import com.m4xvel.aitranslator.ui.screen.util.StatusBarColor
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 
 @Composable
 fun HomeScreen(
@@ -52,8 +47,7 @@ private fun TranslationPanel(
     viewModel: MainViewModel
 ) {
     val state by viewModel.state.collectAsState()
-
-    viewModel.statusNetwork()
+    val isConn = state.statusNetwork == ConnectivityObserver.Status.Available
 
     Column(
         modifier = Modifier
@@ -79,10 +73,8 @@ private fun TranslationPanel(
                 viewModel = viewModel
             )
         }
-        when (state.statusNetwork) {
-            ConnectivityObserver.Status.Lost -> InternetNoConnection()
-            ConnectivityObserver.Status.Unavailable -> InternetNoConnection()
-            else -> { }
+        if (!isConn) {
+            InternetNoConnection()
         }
     }
 }

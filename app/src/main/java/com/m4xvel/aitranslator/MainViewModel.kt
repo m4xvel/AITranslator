@@ -11,10 +11,10 @@ import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -30,10 +30,13 @@ class MainViewModel(
 
     init {
         getLanguage()
+        statusNetwork()
     }
 
     fun showTransfer() {
-        if (_state.value.inputText.isNotEmpty()) {
+        if (_state.value.inputText.isNotEmpty()
+            && _state.value.statusNetwork == ConnectivityObserver.Status.Available
+        ) {
             try {
                 viewModelScope.launch {
                     runAnimation(true)
@@ -42,8 +45,9 @@ class MainViewModel(
                             transferText = transferRepository.getTransfer(
                                 sourceText = "${_state.value.currentLanguage}",
                                 translatedText = "${_state.value.translationLanguage}",
-                                text = _state.value.inputText
-                            ).toString()
+                                text = _state.value.inputText,
+                            ).toString(),
+                            showTranslationTextPanel = true
                         )
                     }
                     showTranslationTextPanel()
@@ -128,7 +132,7 @@ class MainViewModel(
                 translationLanguage = defaultLanguageRepository.getLocaleLanguage(_state.value.currentLanguageKey!!)
             )
         }
-        if (_state.value.transferText.isNotEmpty() && _state.value.inputText.isNotEmpty()) {
+        if (_state.value.showTranslationTextPanel) {
             _state.update {
                 it.copy(
                     inputText = _state.value.transferText,
@@ -206,12 +210,17 @@ class MainViewModel(
         _state.update { it.copy(isKeyboardVisible = isKeyboardOpen) }
     }
 
-    fun statusNetwork() {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    statusNetwork = connectivityObserver.observe().first()
-                )
+    private fun statusNetwork() {
+        viewModelScope.launch(Dispatchers.IO) {
+            connectivityObserver.observe().collect { status ->
+                _state.update { it.copy(statusNetwork = status) }
+                if (_state.value.statusNetwork != ConnectivityObserver.Status.Available) {
+                    _state.update { it.copy(showTranslationTextPanel = false) }
+                } else if (_state.value.statusNetwork == ConnectivityObserver.Status.Available
+                    && _state.value.transferText.isNotEmpty()
+                ) {
+                    _state.update { it.copy(showTranslationTextPanel = true) }
+                }
             }
         }
     }

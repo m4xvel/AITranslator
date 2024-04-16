@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
-fun InternetNoConnection() {
+    fun InternetNoConnection() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
