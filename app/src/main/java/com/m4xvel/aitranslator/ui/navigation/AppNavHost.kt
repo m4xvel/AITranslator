@@ -19,6 +19,7 @@ fun AppNavHost(
     startDestination: String = NavigationItem.Home.route,
     viewModel: MainViewModel = koinViewModel()
 ) {
+
     NavHost(
         modifier = modifier,
         navController = navController,

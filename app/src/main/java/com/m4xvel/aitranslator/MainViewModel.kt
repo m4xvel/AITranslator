@@ -9,17 +9,20 @@ import androidx.lifecycle.viewModelScope
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
+import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val transferRepository: TransferRepository,
     private val defaultLanguageRepository: DefaultLanguageRepository,
-    private val languageRepository: LanguageRepository
+    private val languageRepository: LanguageRepository,
+    private val connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DataState())
@@ -45,7 +48,7 @@ class MainViewModel(
                     }
                     showTranslationTextPanel()
                     runAnimation(false)
-                    Log.d("!!!", "${_state.value.transferText}")
+                    Log.d("!!!", _state.value.transferText)
                 }
             } catch (e: Exception) {
                 Log.d("!!!", "Произошла ошибка: ${e.message}")
@@ -125,6 +128,14 @@ class MainViewModel(
                 translationLanguage = defaultLanguageRepository.getLocaleLanguage(_state.value.currentLanguageKey!!)
             )
         }
+        if (_state.value.transferText.isNotEmpty() && _state.value.inputText.isNotEmpty()) {
+            _state.update {
+                it.copy(
+                    inputText = _state.value.transferText,
+                    transferText = _state.value.inputText
+                )
+            }
+        }
         saveLanguage()
     }
 
@@ -193,5 +204,15 @@ class MainViewModel(
         val isKeyboardOpen = ViewCompat.getRootWindowInsets(view)
             ?.isVisible(WindowInsetsCompat.Type.ime()) ?: true
         _state.update { it.copy(isKeyboardVisible = isKeyboardOpen) }
+    }
+
+    fun statusNetwork() {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    statusNetwork = connectivityObserver.observe().first()
+                )
+            }
+        }
     }
 }

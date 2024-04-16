@@ -1,5 +1,7 @@
 package com.m4xvel.aitranslator.ui.screen.homeScreen
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,10 +18,16 @@ import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.animation.TranslateButton
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.CurrentTextPanel
+import com.m4xvel.aitranslator.ui.screen.homeScreen.component.InternetNoConnection
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.LanguageSelectionPanel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.TranslationTextPanel
 import com.m4xvel.aitranslator.ui.screen.util.StatusBarColor
+import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 
 @Composable
 fun HomeScreen(
@@ -37,13 +45,15 @@ fun HomeScreen(
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 private fun TranslationPanel(
     navController: NavController,
     viewModel: MainViewModel
 ) {
-
     val state by viewModel.state.collectAsState()
+
+    viewModel.statusNetwork()
 
     Column(
         modifier = Modifier
@@ -68,6 +78,11 @@ private fun TranslationPanel(
             TranslationTextPanel(
                 viewModel = viewModel
             )
+        }
+        when (state.statusNetwork) {
+            ConnectivityObserver.Status.Lost -> InternetNoConnection()
+            ConnectivityObserver.Status.Unavailable -> InternetNoConnection()
+            else -> { }
         }
     }
 }

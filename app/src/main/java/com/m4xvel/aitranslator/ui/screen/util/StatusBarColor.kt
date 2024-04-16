@@ -1,7 +1,6 @@
 package com.m4xvel.aitranslator.ui.screen.util
 
 import android.app.Activity
-import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
