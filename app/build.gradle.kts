@@ -10,10 +10,6 @@ android {
     namespace = "com.m4xvel.aitranslator"
     compileSdk = 34
 
-    buildFeatures {
-        buildConfig = true
-    }
-
     defaultConfig {
         applicationId = "com.m4xvel.aitranslator"
         minSdk = 24
@@ -56,6 +52,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {

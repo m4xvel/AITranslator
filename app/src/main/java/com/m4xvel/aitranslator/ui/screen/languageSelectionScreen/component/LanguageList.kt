@@ -14,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.navigation.Screen
+import com.m4xvel.aitranslator.ui.screen.util.ChangedRippleThemeAlpha
 import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 import com.m4xvel.aitranslator.ui.theme.RippleColor
 
@@ -74,7 +74,12 @@ fun LanguageList(
                     },
                 contentAlignment = Alignment.CenterStart
             ) {
-                CompositionLocalProvider(LocalRippleTheme provides ChangedRippleThemeAlpha) {
+                CompositionLocalProvider(
+                    LocalRippleTheme provides ChangedRippleThemeAlpha(
+                        color = RippleColor,
+                        rippleAlpha = RippleAlpha(0f, 0f, 0f, 0.5f)
+                    )
+                ) {
                     Text(
                         modifier = Modifier.padding(start = 38.dp),
                         text = language.value,
@@ -85,12 +90,4 @@ fun LanguageList(
             }
         }
     }
-}
-
-private object ChangedRippleThemeAlpha : RippleTheme {
-    @Composable
-    override fun defaultColor(): Color = RippleColor
-
-    @Composable
-    override fun rippleAlpha(): RippleAlpha = RippleAlpha(0f, 0f, 0f, 0.5f)
 }

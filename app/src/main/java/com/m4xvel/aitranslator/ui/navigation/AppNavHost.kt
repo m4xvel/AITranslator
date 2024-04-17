@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreen
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelectionScreen
+import com.m4xvel.aitranslator.ui.screen.settingScreen.SettingScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -17,7 +18,7 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String = NavigationItem.Home.route,
-    viewModel: MainViewModel = koinViewModel()
+    viewModel: MainViewModel
 ) {
 
     NavHost(
@@ -50,6 +51,11 @@ fun AppNavHost(
                 id = backStackEntry.arguments?.getInt("id")!!,
                 viewModel = viewModel
             )
+        }
+        composable(
+            route = NavigationItem.Settings.route
+        ) {
+            SettingScreen()
         }
     }
 }

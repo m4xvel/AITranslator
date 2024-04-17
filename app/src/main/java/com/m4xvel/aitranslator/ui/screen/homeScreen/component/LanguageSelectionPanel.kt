@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,6 +33,7 @@ import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
 import com.m4xvel.aitranslator.ui.navigation.Screen
+import com.m4xvel.aitranslator.ui.screen.util.ChangedRippleThemeAlpha
 import com.m4xvel.aitranslator.ui.theme.SecondaryColor
 
 @Composable
@@ -55,7 +55,12 @@ fun LanguageSelectionPanel(
             .background(color = SecondaryColor),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        CompositionLocalProvider(LocalRippleTheme provides ChangedRippleThemeAlpha) {
+        CompositionLocalProvider(
+            LocalRippleTheme provides ChangedRippleThemeAlpha(
+                color = Color.White,
+                rippleAlpha = RippleAlpha(0f, 0f, 0f, 0.1f)
+            )
+        ) {
             LanguageItem(
                 onClick = {
                     navController.navigate(
@@ -117,12 +122,4 @@ private fun LanguageItem(onClick: () -> Unit, shapeTopStart: Int, shapeTopEnd: I
             )
         }
     }
-}
-
-private object ChangedRippleThemeAlpha : RippleTheme {
-    @Composable
-    override fun defaultColor(): Color = Color.White
-
-    @Composable
-    override fun rippleAlpha(): RippleAlpha = RippleAlpha(0f, 0f, 0f, 0.1f)
 }
