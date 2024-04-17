@@ -74,7 +74,7 @@ private fun TranslationPanel(
             )
         }
         if (!isConn) {
-            InternetNoConnection()
+            InternetNoConnection(viewModel)
         }
     }
 }

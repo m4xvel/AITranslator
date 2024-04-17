@@ -15,4 +15,7 @@
     <string name="translate_to">へ翻訳する</string>
     <string name="search">検索</string>
     <string name="enter_text">テキストを入力してください</string>
+    <string name="no_connection">接続がありません</string>
+    <string name="no_connection_text">ネットワーク接続を確認して、ページを更新してください</string>
+    <string name="refresh_button">更新する</string>
 </resources>

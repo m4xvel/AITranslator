@@ -210,7 +210,7 @@ class MainViewModel(
         _state.update { it.copy(isKeyboardVisible = isKeyboardOpen) }
     }
 
-    private fun statusNetwork() {
+    fun statusNetwork() {
         viewModelScope.launch(Dispatchers.IO) {
             connectivityObserver.observe().collect { status ->
                 _state.update { it.copy(statusNetwork = status) }

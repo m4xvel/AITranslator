@@ -15,4 +15,7 @@
     <string name="translate_to">翻译成</string>
     <string name="search">搜索</string>
     <string name="enter_text">请输入文本</string>
+    <string name="no_connection">没有连接</string>
+    <string name="no_connection_text">检查网络连接并刷新页面</string>
+    <string name="refresh_button">更新</string>
 </resources>

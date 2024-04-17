@@ -15,4 +15,7 @@
     <string name="translate_to">Traduzir para</string>
     <string name="search">Pesquisar</string>
     <string name="enter_text">Digite o texto</string>
+    <string name="no_connection">Sem conexão</string>
+    <string name="no_connection_text">Verifique a conexão de rede e atualize a página</string>
+    <string name="refresh_button">Atualizar</string>
 </resources>
