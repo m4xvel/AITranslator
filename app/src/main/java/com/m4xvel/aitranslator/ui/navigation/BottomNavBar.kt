@@ -43,7 +43,9 @@ fun BottomNavBar(
             Icon(
                 modifier = Modifier.clickable(
                     onClick = {
-                        navController.navigate(Screen.HOME.name)
+                        navController.navigate(Screen.HOME.name) {
+                            popUpTo(0)
+                        }
                     },
                     enabled = !currentDestination.hierarchy.any { it.route == Screen.HOME.name },
                     interactionSource = interactionSource,
@@ -61,7 +63,9 @@ fun BottomNavBar(
             Icon(
                 modifier = Modifier.clickable(
                     onClick = {
-                        navController.navigate(Screen.SETTINGS.name)
+                        navController.navigate(Screen.SETTINGS.name) {
+                            popUpTo(Screen.HOME.name)
+                        }
                     },
                     enabled = !currentDestination.hierarchy.any { it.route == Screen.SETTINGS.name },
                     interactionSource = interactionSource,

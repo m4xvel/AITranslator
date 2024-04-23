@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.m4xvel.aitranslator.ui.navigation.AppNavHost
 import com.m4xvel.aitranslator.ui.navigation.BottomNavBar
-import com.m4xvel.aitranslator.ui.screen.util.StatusBarColor
 import com.m4xvel.aitranslator.ui.theme.AITranslatorTheme
 import org.koin.androidx.compose.koinViewModel
 
@@ -23,7 +22,6 @@ fun MainScreen() {
     val viewModel: MainViewModel = koinViewModel()
     val state by viewModel.state.collectAsState()
     AITranslatorTheme(appTheme = state.theme) {
-        StatusBarColor(navController = navController)
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background

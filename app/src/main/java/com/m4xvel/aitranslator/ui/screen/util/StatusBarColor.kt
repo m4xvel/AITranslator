@@ -4,7 +4,6 @@ import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
@@ -24,14 +23,13 @@ fun StatusBarColor(
     val isActiveColor = MaterialTheme.colorScheme.surfaceContainerHigh.toArgb()
     val isNoActiveColor = MaterialTheme.colorScheme.background.toArgb()
 
-    SideEffect {
-        val window = (view.context as Activity).window
-        if (result != Screen.HOME.name) {
-            window.statusBarColor = isActiveColor
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
-        } else {
-            window.statusBarColor = isNoActiveColor
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
-        }
+    val window = (view.context as Activity).window
+
+    if (result != Screen.HOME.name) {
+        window.statusBarColor = isActiveColor
+        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+    } else {
+        window.statusBarColor = isNoActiveColor
+        WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
     }
 }
