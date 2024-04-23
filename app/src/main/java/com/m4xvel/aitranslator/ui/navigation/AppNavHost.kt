@@ -11,7 +11,6 @@ import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreen
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelectionScreen
 import com.m4xvel.aitranslator.ui.screen.settingScreen.SettingScreen
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AppNavHost(
@@ -55,7 +54,9 @@ fun AppNavHost(
         composable(
             route = NavigationItem.Settings.route
         ) {
-            SettingScreen()
+            SettingScreen(
+                viewModel = viewModel
+            )
         }
     }
 }

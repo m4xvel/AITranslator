@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
-import com.m4xvel.aitranslator.ui.theme.LightSurface
 import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
@@ -47,13 +47,7 @@ fun TranslationTextPanel(
             .fillMaxWidth()
             .offset(y = (-60).dp)
             .height(185.dp)
-            .clip(
-                RoundedCornerShape(
-                    topStart = 10.dp,
-                    topEnd = 10.dp
-                )
-            )
-            .background(LightSurface),
+            .background(MaterialTheme.colorScheme.surface),
         content = {
 
             Box(modifier = Modifier
@@ -63,9 +57,10 @@ fun TranslationTextPanel(
                 .verticalScroll(rememberScrollState()),
                 content = {
                     Text(
-                        text = state.transferText.toString(),
+                        text = state.transferText,
                         fontWeight = FontWeight.Normal,
-                        fontSize = 20.sp
+                        fontSize = 20.sp,
+                        color = MaterialTheme.colorScheme.onBackground
                     )
                 }
             )
@@ -77,13 +72,13 @@ fun TranslationTextPanel(
                 content = {
                     IconButton(
                         onClick = {
-                            clipboardManager.setText(AnnotatedString(state.transferText.toString()))
+                            clipboardManager.setText(AnnotatedString(state.transferText))
                         },
                         content = {
                             Icon(
                                 painter = painterResource(id = R.drawable.copy),
                                 contentDescription = "delete",
-                                tint = PrimaryColor
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     )

@@ -6,35 +6,56 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
+enum class AppTheme {
+    Light, Dark, Default
+}
+
 private val DarkColorScheme = darkColorScheme(
     primary = PrimaryColor,
-    onPrimary = OnPrimaryColor,
     secondary = SecondaryColor,
     background = DarkBackground,
-    surface = DarkSurface
+    onBackground = OnDarkBackground,
+    surface = DarkSurface,
+    onSurface = OnDarkSurface,
+    surfaceContainerHigh = DarkSurfaceContainerHigh,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryColor,
-    onPrimary = OnPrimaryColor,
     secondary = SecondaryColor,
     background = LightBackground,
-    surface = LightSurface
+    onBackground = OnLightBackground,
+    surface = LightSurface,
+    onSurface = OnLightSurface,
+    surfaceContainerHigh = LightSurfaceContainerHigh,
 )
 
 @Composable
 fun AITranslatorTheme(
+    appTheme: AppTheme,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+
+    val colorScheme = when (appTheme) {
+        AppTheme.Default -> {
+            if (darkTheme) {
+                DarkColorScheme
+            } else {
+                LightColorScheme
+            }
+        }
+
+        AppTheme.Light -> {
+            LightColorScheme
+        }
+
+        AppTheme.Dark -> {
+            DarkColorScheme
+        }
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
+        colorScheme = colorScheme, typography = Typography, content = content
     )
 }

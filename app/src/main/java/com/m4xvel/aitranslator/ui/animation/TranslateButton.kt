@@ -6,46 +6,40 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.m4xvel.aitranslator.MainViewModel
 
 @Composable
 fun TranslateButton(
     isPlaying: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    viewModel: MainViewModel
 ) {
 
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.Asset("animation-translate.json"))
+    val state by viewModel.state.collectAsState()
 
-    var clipSpec by remember { mutableStateOf(LottieClipSpec.Progress(min = 0f, max = 0.5f)) }
-    var iterations by remember { mutableIntStateOf(1) }
+    val composition by rememberLottieComposition(spec = LottieCompositionSpec.Asset("animation-translate.json"))
 
     val interactionSource = remember { MutableInteractionSource() }
 
     val progress by animateLottieCompositionAsState(
         composition = composition,
-        clipSpec = clipSpec,
+        clipSpec = state.clipSpec,
         isPlaying = isPlaying,
-        iterations = iterations
+        iterations = state.iterations
     )
 
-    if (progress == 0.5f) {
-        clipSpec = LottieClipSpec.Progress(min = 0.55f, max = 1f)
-        iterations = LottieConstants.IterateForever
-    }
+    viewModel.updateAnimation(progress = progress)
 
     Box(
         modifier = Modifier

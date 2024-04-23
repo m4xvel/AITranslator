@@ -2,15 +2,19 @@ package com.m4xvel.aitranslator
 
 import android.util.Log
 import android.view.View
+import androidx.compose.ui.graphics.Color
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.airbnb.lottie.compose.LottieClipSpec
+import com.airbnb.lottie.compose.LottieConstants
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
+import com.m4xvel.aitranslator.ui.theme.AppTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -224,4 +228,31 @@ class MainViewModel(
             }
         }
     }
+
+    fun updateAnimation(progress: Float) {
+        if (progress == 0.5f) {
+            _state.update {
+                it.copy(
+                    clipSpec = LottieClipSpec.Progress(min = 0.55f, max = 1f),
+                    iterations = LottieConstants.IterateForever
+                )
+            }
+        }
+    }
+
+    fun setTheme(theme: AppTheme) {
+        _state.update {
+            it.copy(
+                theme = theme
+            )
+        }
+    }
+
+    /*fun changeTheme(color: Color): Color {
+        return when (_state.value.theme) {
+            AppTheme.Light -> color
+            AppTheme.Dark -> color
+            else -> color
+        }
+    }*/
 }

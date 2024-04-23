@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -54,6 +55,7 @@ fun SearchLanguagePanel(
 
         val state by viewModel.state.collectAsState()
         val enabled by remember { mutableStateOf(true) }
+        val color = MaterialTheme.colorScheme.onSurface
 
         BasicTextField(
             singleLine = true,
@@ -64,11 +66,11 @@ fun SearchLanguagePanel(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(5.dp))
-                .background(Color.White),
+                .background(MaterialTheme.colorScheme.surface),
             textStyle = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onBackground
             ),
             decorationBox = { innerTextField ->
                 Row(
@@ -78,7 +80,7 @@ fun SearchLanguagePanel(
                             val strokeWidth = 1.dp.toPx()
                             val y = size.height - strokeWidth / 2
                             drawLine(
-                                color = PrimaryColor,
+                                color = color,
                                 start = Offset(0f, y),
                                 end = Offset(size.width, y),
                                 strokeWidth = strokeWidth
@@ -93,7 +95,7 @@ fun SearchLanguagePanel(
                         modifier = Modifier
                             .padding(start = 10.dp)
                             .size(32.dp),
-                        tint = PrimaryColor
+                        tint = color
                     )
                     Box(
                         modifier = Modifier
@@ -104,7 +106,7 @@ fun SearchLanguagePanel(
                         if (state.searchLanguage.isEmpty()) {
                             Text(
                                 text = stringResource(id = R.string.search),
-                                color = Color.Black,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontSize = 20.sp,
                                 modifier = Modifier.alpha(0.7f)
                             )
@@ -116,7 +118,7 @@ fun SearchLanguagePanel(
             enabled = enabled,
             maxLines = 1,
             cursorBrush = if (!state.isKeyboardVisible) SolidColor(Color.Unspecified) else SolidColor(
-                Color.Black
+                MaterialTheme.colorScheme.onBackground
             )
         )
     }

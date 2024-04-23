@@ -8,13 +8,6 @@
         android:pathData="M0,0h30v30h-30z"/>
     <path
         android:pathData="M11.262,17.5H2.5V20H11.262V23.75L16.25,18.75L11.262,13.75V17.5ZM18.737,16.25V12.5H27.5V10H18.737V6.25L13.75,11.25L18.737,16.25Z"
-        android:fillColor="#000000"/>
-  </group>
-  <group>
-    <clip-path
-        android:pathData="M0,0h30v30h-30z"/>
-    <path
-        android:pathData="M11.262,17.5H2.5V20H11.262V23.75L16.25,18.75L11.262,13.75V17.5ZM18.737,16.25V12.5H27.5V10H18.737V6.25L13.75,11.25L18.737,16.25Z"
         android:fillColor="#ffffff"/>
   </group>
 </vector>

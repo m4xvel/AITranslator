@@ -49,9 +49,13 @@ fun BottomNavBar(
                     interactionSource = interactionSource,
                     indication = null
                 ),
-                painter = painterResource(id = R.drawable.home),
+                painter = if (currentDestination.hierarchy.any { it.route == Screen.HOME.name }) {
+                    painterResource(id = R.drawable.home)
+                } else {
+                    painterResource(id = R.drawable.home_uncolor)
+                },
                 contentDescription = "Home",
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.onSurface
             )
 
             Icon(
@@ -63,9 +67,13 @@ fun BottomNavBar(
                     interactionSource = interactionSource,
                     indication = null
                 ),
-                painter = painterResource(id = R.drawable.settings),
+                painter = if (currentDestination.hierarchy.any { it.route == Screen.SETTINGS.name }) {
+                    painterResource(id = R.drawable.settings)
+                } else {
+                    painterResource(id = R.drawable.settings_uncolor)
+                },
                 contentDescription = "Settings",
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.onSurface
             )
         }
     }

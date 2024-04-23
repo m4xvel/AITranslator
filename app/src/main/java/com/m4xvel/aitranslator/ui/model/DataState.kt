@@ -1,6 +1,8 @@
 package com.m4xvel.aitranslator.ui.model
 
+import com.airbnb.lottie.compose.LottieClipSpec
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
+import com.m4xvel.aitranslator.ui.theme.AppTheme
 
 data class DataState(
     //HomeScreen
@@ -17,10 +19,15 @@ data class DataState(
 
     //Animation
     val isPlaying: Boolean = false,
+    val clipSpec: LottieClipSpec.Progress = LottieClipSpec.Progress(min = 0f, max = 0.5f),
+    val iterations: Int = 1,
 
     //Network
     val statusNetwork: ConnectivityObserver.Status = ConnectivityObserver.Status.Unavailable,
 
     //LanguageSelectionScreen
-    val searchLanguage: String = ""
+    val searchLanguage: String = "",
+
+    //Theme
+    val theme: AppTheme = AppTheme.Default
 )

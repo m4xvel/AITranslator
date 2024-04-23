@@ -34,7 +34,6 @@ import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
 import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.util.ChangedRippleThemeAlpha
-import com.m4xvel.aitranslator.ui.theme.SecondaryColor
 
 @Composable
 fun LanguageSelectionPanel(
@@ -52,7 +51,7 @@ fun LanguageSelectionPanel(
             .fillMaxWidth()
             .height(41.dp)
             .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 20.dp))
-            .background(color = SecondaryColor),
+            .background(color = MaterialTheme.colorScheme.secondary),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         CompositionLocalProvider(

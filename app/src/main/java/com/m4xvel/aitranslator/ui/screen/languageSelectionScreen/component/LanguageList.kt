@@ -23,13 +23,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.util.ChangedRippleThemeAlpha
-import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 import com.m4xvel.aitranslator.ui.theme.RippleColor
 
 @Composable
@@ -84,7 +82,7 @@ fun LanguageList(
                         modifier = Modifier.padding(start = 38.dp),
                         text = language.value,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = if (isPressed) PrimaryColor else Color.Black
+                        color = if (isPressed) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onBackground
                     )
                 }
             }

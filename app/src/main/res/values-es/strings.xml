@@ -18,4 +18,9 @@
     <string name="no_connection">Sin conexión</string>
     <string name="no_connection_text">Verifique la conexión a la red y actualice la página</string>
     <string name="refresh_button">Actualizar</string>
+    <string name="theme_design">Tema de diseño</string>
+    <string name="light">Claro</string>
+    <string name="dark">Oscuro</string>
+    <string name="system">Sistema</string>
+    <string name="same_device_text">Igual que en el dispositivo</string>
 </resources>

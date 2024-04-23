@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,8 +44,6 @@ import androidx.compose.ui.unit.sp
 import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
 import com.m4xvel.aitranslator.ui.screen.util.KeyboardListener
-import com.m4xvel.aitranslator.ui.theme.LightSurface
-import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
 fun CurrentTextPanel(
@@ -75,7 +74,7 @@ fun CurrentTextPanel(
                     bottomEnd = if (state.showTranslationTextPanel) 0.dp else 10.dp
                 )
             )
-            .background(LightSurface)
+            .background(MaterialTheme.colorScheme.surface)
     ) {
 
         val fontSize = viewModel.decreaseFont()
@@ -96,7 +95,7 @@ fun CurrentTextPanel(
             textStyle = TextStyle(
                 fontWeight = FontWeight.Normal,
                 fontSize = fontSize.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onBackground,
             ),
             decorationBox = { innerTextField ->
                 Box(
@@ -108,7 +107,7 @@ fun CurrentTextPanel(
 
                         Text(
                             text = "${stringResource(id = R.string.enter_text)}...",
-                            color = Color.Black,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Light,
                             modifier = Modifier.alpha(0.7f)
@@ -118,7 +117,7 @@ fun CurrentTextPanel(
                 }
             },
             cursorBrush = if (!state.isKeyboardVisible) SolidColor(Color.Unspecified) else SolidColor(
-                Color.Black
+                MaterialTheme.colorScheme.onBackground
             )
         )
         BottomPanel(
@@ -135,6 +134,7 @@ private fun BottomPanel(
 ) {
 
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val onBackground = MaterialTheme.colorScheme.onSurface
 
     Row(
         modifier = Modifier
@@ -143,7 +143,7 @@ private fun BottomPanel(
                 val strokeWidth = 1.dp.toPx()
                 val y = size.height - strokeWidth / 2
                 drawLine(
-                    color = PrimaryColor,
+                    color = onBackground,
                     start = Offset(0f, y),
                     end = Offset(size.width, y),
                     strokeWidth = strokeWidth
@@ -158,7 +158,7 @@ private fun BottomPanel(
                     Icon(
                         painter = painterResource(id = R.drawable.delete),
                         contentDescription = "delete",
-                        tint = PrimaryColor
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
             )
@@ -173,7 +173,7 @@ private fun BottomPanel(
                     Icon(
                         painter = painterResource(id = R.drawable.paste),
                         contentDescription = "paste",
-                        tint = PrimaryColor
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
             )
