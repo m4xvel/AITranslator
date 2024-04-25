@@ -1,0 +1,15 @@
+CREATE TABLE Settings (
+    id INTEGER PRIMARY KEY,
+    themeId INTEGER
+);
+
+saveTheme:
+INSERT OR REPLACE
+INTO Settings(
+    id,
+    themeId
+) VALUES (1, ?);
+
+installTheme:
+SELECT themeId
+FROM Settings;

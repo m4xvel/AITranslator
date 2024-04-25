@@ -29,5 +29,8 @@ data class DataState(
     val searchLanguage: String = "",
 
     //Theme
-    val theme: AppTheme = AppTheme.Default
+    val theme: AppTheme = AppTheme.Default,
+
+    //SwitchButton
+    val isChecked: Boolean = false
 )

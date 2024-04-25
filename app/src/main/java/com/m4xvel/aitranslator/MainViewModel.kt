@@ -2,19 +2,19 @@ package com.m4xvel.aitranslator
 
 import android.util.Log
 import android.view.View
-import androidx.compose.ui.graphics.Color
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieConstants
+import com.m4xvel.aitranslator.domain.repository.ApplicationSettingsRepository
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
-import com.m4xvel.aitranslator.ui.theme.AppTheme
+import com.m4xvel.aitranslator.ui.screen.util.repository.ThemeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +26,9 @@ class MainViewModel(
     private val transferRepository: TransferRepository,
     private val defaultLanguageRepository: DefaultLanguageRepository,
     private val languageRepository: LanguageRepository,
-    private val connectivityObserver: ConnectivityObserver
+    private val connectivityObserver: ConnectivityObserver,
+    private val themeRepository: ThemeRepository,
+    private val applicationSettingsRepository: ApplicationSettingsRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DataState())
@@ -35,6 +37,7 @@ class MainViewModel(
     init {
         getLanguage()
         statusNetwork()
+        setTheme()
     }
 
     fun showTransfer() {
@@ -240,19 +243,20 @@ class MainViewModel(
         }
     }
 
-    fun setTheme(theme: AppTheme) {
+    fun setTheme(themeId: Long = applicationSettingsRepository.installTheme()) {
         _state.update {
             it.copy(
-                theme = theme
+                theme = themeRepository.installTheme(themeId)
             )
         }
+        applicationSettingsRepository.saveTheme(themeId)
     }
 
-    /*fun changeTheme(color: Color): Color {
-        return when (_state.value.theme) {
-            AppTheme.Light -> color
-            AppTheme.Dark -> color
-            else -> color
+    fun switch() {
+        if (!_state.value.isChecked) {
+            _state.update { it.copy(isChecked = true) }
+        } else {
+            _state.update { it.copy(isChecked = false) }
         }
-    }*/
+    }
 }

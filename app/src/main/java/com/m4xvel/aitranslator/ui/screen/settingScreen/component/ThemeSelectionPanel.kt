@@ -18,6 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,77 +40,94 @@ fun ThemeSelectionPanel(
     viewModel: MainViewModel
 ) {
 
-    val textColor = MaterialTheme.colorScheme.onBackground
+    val state by viewModel.state.collectAsState()
 
-    Column(
+    Text(
+        modifier = Modifier
+            .padding(start = 20.dp),
+        text = stringResource(id = R.string.theme_design),
+        color = MaterialTheme.colorScheme.onBackground,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Normal
+    )
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp)
+            .padding(top = 18.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            modifier = Modifier
-                .padding(start = 35.dp),
-            text = stringResource(id = R.string.theme_design),
-            color = textColor,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Normal
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 18.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
+
+        val systemContainerColor =
+            if (state.theme == AppTheme.Default) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+
+        val systemContentColor =
+            if (state.theme == AppTheme.Default) Color.White else MaterialTheme.colorScheme.onBackground
+
+        val lightContainerColor =
+            if (state.theme == AppTheme.Light) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+
+        val lightContentColor =
+            if (state.theme == AppTheme.Light) Color.White else MaterialTheme.colorScheme.onBackground
+
+        val darkContainerColor =
+            if (state.theme == AppTheme.Dark) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+
+        val darkContentColor =
+            if (state.theme == AppTheme.Dark) Color.White else MaterialTheme.colorScheme.onBackground
+
+        CompositionLocalProvider(
+            LocalRippleTheme provides ChangedRippleThemeAlpha(
+                color = Color.Unspecified,
+                rippleAlpha = RippleAlpha(0f, 0f, 0f, 0f)
+            )
         ) {
-            CompositionLocalProvider(
-                LocalRippleTheme provides ChangedRippleThemeAlpha(
-                    color = Color.Unspecified,
-                    rippleAlpha = RippleAlpha(0f, 0f, 0f, 0f)
-                )
-            ) {
-                SystemTheme(
-                    textColor = textColor,
-                    onClick = {
-                        viewModel.setTheme(AppTheme.Default)
-                    })
-                AnotherTheme(
-                    onClick = {
-                        viewModel.setTheme(AppTheme.Light)
-                    },
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.sunny),
-                            tint = textColor,
-                            contentDescription = null
-                        )
-                        Text(
-                            modifier = Modifier
-                                .padding(top = 16.dp),
-                            text = stringResource(id = R.string.light),
-                            color = textColor,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                )
-                AnotherTheme(
-                    onClick = {
-                        viewModel.setTheme(AppTheme.Dark)
-                    },
-                    content = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.moon),
-                            tint = textColor,
-                            contentDescription = null
-                        )
-                        Text(
-                            modifier = Modifier
-                                .padding(top = 16.dp),
-                            text = stringResource(id = R.string.dark),
-                            color = textColor,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                )
-            }
+
+            SystemTheme(
+                textColor = systemContentColor,
+                buttonColor = systemContainerColor,
+                onClick = {
+                    viewModel.setTheme(0)
+                })
+            AnotherTheme(
+                onClick = {
+                    viewModel.setTheme(1)
+                },
+                buttonColor = lightContainerColor,
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.sunny),
+                        tint = lightContentColor,
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 16.dp),
+                        text = stringResource(id = R.string.light),
+                        color = lightContentColor,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            )
+            AnotherTheme(
+                onClick = {
+                    viewModel.setTheme(2)
+                },
+                buttonColor = darkContainerColor,
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.moon),
+                        tint = darkContentColor,
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 16.dp),
+                        text = stringResource(id = R.string.dark),
+                        color = darkContentColor,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            )
         }
     }
 }
@@ -116,6 +135,7 @@ fun ThemeSelectionPanel(
 @Composable
 private fun SystemTheme(
     textColor: Color,
+    buttonColor: Color,
     onClick: () -> Unit
 ) {
     Column(
@@ -123,7 +143,7 @@ private fun SystemTheme(
             .width(140.dp)
             .height(100.dp)
             .clip(shape = RoundedCornerShape(5.dp))
-            .background(MaterialTheme.colorScheme.surface)
+            .background(buttonColor)
             .clickable(onClick = onClick),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -148,6 +168,7 @@ private fun SystemTheme(
 @Composable
 private fun AnotherTheme(
     onClick: () -> Unit,
+    buttonColor: Color,
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     Column(
@@ -155,7 +176,7 @@ private fun AnotherTheme(
             .width(80.dp)
             .height(100.dp)
             .clip(shape = RoundedCornerShape(5.dp))
-            .background(MaterialTheme.colorScheme.surface)
+            .background(buttonColor)
             .clickable(
                 onClick = onClick
             ),
