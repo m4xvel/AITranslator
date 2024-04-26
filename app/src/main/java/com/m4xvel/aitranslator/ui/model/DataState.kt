@@ -32,5 +32,6 @@ data class DataState(
     val theme: AppTheme = AppTheme.Default,
 
     //SwitchButton
-    val isChecked: Boolean = false
+    val isChecked: Boolean = false,
+    val isEnabled: Boolean = true
 )

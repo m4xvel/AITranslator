@@ -15,6 +15,7 @@ import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreen
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelectionScreen
 import com.m4xvel.aitranslator.ui.screen.settingScreen.SettingScreen
+import com.m4xvel.aitranslator.ui.screen.systemLanguageSelectionScreen.SystemLanguageSelectionScreen
 import com.m4xvel.aitranslator.ui.screen.util.StatusBarColor
 
 @Composable
@@ -112,23 +113,43 @@ fun AppNavHost(
                         animationSpec = tween(200)
                     )
 
-                    else -> EnterTransition.None
-                }
-            },
-            exitTransition = {
-                when (initialState.destination.route) {
-                    NavigationItem.Home.route -> slideOutOfContainer(
+                    NavigationItem.SystemLanguageSelection.route -> slideIntoContainer(
                         AnimatedContentTransitionScope.SlideDirection.End,
                         animationSpec = tween(200)
                     )
 
-                    else -> ExitTransition.None
+                    else -> EnterTransition.None
                 }
+            },
+            exitTransition = {
+                ExitTransition.None
             }
         ) {
             StatusBarColor(navController = navController)
             SettingScreen(
-                viewModel = viewModel
+                viewModel = viewModel,
+                navController = navController
+            )
+        }
+        composable(
+            route = NavigationItem.SystemLanguageSelection.route,
+            enterTransition = {
+                when (initialState.destination.route) {
+                    NavigationItem.Settings.route -> slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Start,
+                        animationSpec = tween(200)
+                    )
+
+                    else -> EnterTransition.None
+                }
+            },
+            exitTransition = {
+                ExitTransition.None
+            }
+        ) {
+            SystemLanguageSelectionScreen(
+                viewModel = viewModel,
+                navController = navController
             )
         }
     }

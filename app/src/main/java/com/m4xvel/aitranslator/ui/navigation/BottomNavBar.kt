@@ -71,7 +71,7 @@ fun BottomNavBar(
                     interactionSource = interactionSource,
                     indication = null
                 ),
-                painter = if (currentDestination.hierarchy.any { it.route == Screen.SETTINGS.name }) {
+                painter = if (!currentDestination.hierarchy.any { it.route == Screen.HOME.name }) {
                     painterResource(id = R.drawable.settings)
                 } else {
                     painterResource(id = R.drawable.settings_uncolor)

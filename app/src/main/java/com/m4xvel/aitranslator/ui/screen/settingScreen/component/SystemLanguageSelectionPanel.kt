@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,11 +29,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.util.customElement.SwitchButton
 
 @Composable
-fun SystemLanguageSelectionPanel(viewModel: MainViewModel) {
+fun SystemLanguageSelectionPanel(
+    viewModel: MainViewModel,
+    navController: NavController
+) {
 
     val state by viewModel.state.collectAsState()
 
@@ -55,6 +61,7 @@ fun SystemLanguageSelectionPanel(viewModel: MainViewModel) {
 
         },
         indication = null,
+        enabled = false,
         content = {
             Text(
                 text = "Определять автоматически",
@@ -78,9 +85,12 @@ fun SystemLanguageSelectionPanel(viewModel: MainViewModel) {
         paddingBottomStart = 5,
         paddingBottomEnd = 5,
         onClick = {
-
+            navController.navigate(Screen.SYSTEM_LANGUAGE_SELECTION.name) {
+                popUpTo(Screen.SETTINGS.name)
+            }
         },
         indication = LocalIndication.current,
+        enabled = state.isEnabled,
         content = {
             Text(
                 text = "Русский",
@@ -89,11 +99,11 @@ fun SystemLanguageSelectionPanel(viewModel: MainViewModel) {
                 modifier = Modifier.padding(start = 20.dp)
             )
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                imageVector = if (!state.isEnabled) Icons.Default.Lock else Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(end = 18.dp)
-                    .size(24.dp),
+                    .padding(end = if (!state.isEnabled) 24.dp else 20.dp)
+                    .size(size = if (!state.isEnabled) 18.dp else 24.dp),
                 tint = MaterialTheme.colorScheme.onBackground
             )
         }
@@ -109,6 +119,7 @@ private fun LanguagePanel(
     paddingBottomEnd: Int,
     onClick: () -> Unit,
     indication: Indication?,
+    enabled: Boolean,
     content: @Composable (RowScope.() -> Unit)
 ) {
 
@@ -129,7 +140,8 @@ private fun LanguagePanel(
             .clickable(
                 onClick = onClick,
                 interactionSource = interactionSource,
-                indication = indication
+                indication = indication,
+                enabled = enabled
             )
             .height(41.dp)
             .background(MaterialTheme.colorScheme.surface),

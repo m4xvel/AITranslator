@@ -254,9 +254,19 @@ class MainViewModel(
 
     fun switch() {
         if (!_state.value.isChecked) {
-            _state.update { it.copy(isChecked = true) }
+            _state.update {
+                it.copy(
+                    isChecked = true,
+                    isEnabled = false
+                )
+            }
         } else {
-            _state.update { it.copy(isChecked = false) }
+            _state.update {
+                it.copy(
+                    isChecked = false,
+                    isEnabled = true
+                )
+            }
         }
     }
 }
