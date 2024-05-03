@@ -1,15 +1,15 @@
-CREATE TABLE Settings (
+CREATE TABLE Theme (
     id INTEGER PRIMARY KEY,
     themeId INTEGER
 );
 
 saveTheme:
 INSERT OR REPLACE
-INTO Settings(
+INTO Theme(
     id,
     themeId
 ) VALUES (1, ?);
 
 installTheme:
 SELECT themeId
-FROM Settings;
+FROM Theme;

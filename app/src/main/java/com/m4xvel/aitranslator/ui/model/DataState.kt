@@ -28,6 +28,9 @@ data class DataState(
     //LanguageSelectionScreen
     val searchLanguage: String = "",
 
+    //Language
+    val currentSystemLanguage: String? = null,
+
     //Theme
     val theme: AppTheme = AppTheme.Default,
 

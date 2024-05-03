@@ -26,11 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.R
 import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.util.customElement.SwitchButton
 
@@ -45,7 +47,7 @@ fun SystemLanguageSelectionPanel(
     Text(
         modifier = Modifier
             .padding(start = 20.dp, top = 23.dp),
-        text = "Язык",
+        text = stringResource(id = R.string.language_text),
         color = MaterialTheme.colorScheme.onBackground,
         fontSize = 20.sp,
         fontWeight = FontWeight.Normal
@@ -64,7 +66,7 @@ fun SystemLanguageSelectionPanel(
         enabled = false,
         content = {
             Text(
-                text = "Определять автоматически",
+                text = stringResource(id = R.string.determine_automatically),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(start = 20.dp)
@@ -93,7 +95,7 @@ fun SystemLanguageSelectionPanel(
         enabled = state.isEnabled,
         content = {
             Text(
-                text = "Русский",
+                text = "TEXT1",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(start = 20.dp)

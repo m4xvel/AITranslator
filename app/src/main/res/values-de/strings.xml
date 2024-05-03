@@ -18,9 +18,12 @@
     <string name="no_connection">Keine Verbindung</string>
     <string name="no_connection_text">Überprüfen Sie die Netzwerkverbindung und aktualisieren Sie die Seite</string>
     <string name="refresh_button">Aktualisieren</string>
+    <string name="settings_text">Einstellungen</string>
     <string name="theme_design">Gestaltungsthema</string>
     <string name="light">Hell</string>
     <string name="dark">Dunkel</string>
     <string name="system">System</string>
     <string name="same_device_text">Genau wie auf dem Gerät</string>
+    <string name="language_text">Sprache</string>
+    <string name="determine_automatically">Automatisch bestimmen</string>
 </resources>

@@ -18,9 +18,12 @@
     <string name="no_connection">接続がありません</string>
     <string name="no_connection_text">ネットワーク接続を確認して、ページを更新してください</string>
     <string name="refresh_button">更新する</string>
+    <string name="settings_text">設定</string>
     <string name="theme_design">テーマデザイン</string>
     <string name="light">明るい</string>
     <string name="dark">暗い</string>
     <string name="system">システム</string>
     <string name="same_device_text">デバイスと同じ</string>
+    <string name="language_text">言語</string>
+    <string name="determine_automatically">自動的に決定する</string>
 </resources>

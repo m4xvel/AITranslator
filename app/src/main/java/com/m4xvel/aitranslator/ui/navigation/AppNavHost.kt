@@ -29,7 +29,7 @@ fun AppNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination,
+        startDestination = startDestination
     ) {
         composable(
             route = NavigationItem.Home.route,
@@ -43,6 +43,11 @@ fun AppNavHost(
                     "${NavigationItem.LanguageSelection.route}/{text}/{id}" -> slideIntoContainer(
                         AnimatedContentTransitionScope.SlideDirection.Down,
                         animationSpec = tween(400)
+                    )
+
+                    NavigationItem.SystemLanguageSelection.route -> slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.End,
+                        animationSpec = tween(200)
                     )
 
                     else -> EnterTransition.None

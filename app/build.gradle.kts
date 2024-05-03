@@ -83,6 +83,7 @@ dependencies {
     implementation(libs.android.driver)
     implementation(libs.navigation.compose)
     implementation(libs.lottie.compose)
+    implementation(libs.appcompat)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

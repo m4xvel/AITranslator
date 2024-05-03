@@ -18,9 +18,12 @@
     <string name="no_connection">Sem conexão</string>
     <string name="no_connection_text">Verifique a conexão de rede e atualize a página</string>
     <string name="refresh_button">Atualizar</string>
+    <string name="settings_text">Configurações</string>
     <string name="theme_design">Tema de design</string>
     <string name="light">Claro</string>
     <string name="dark">Escuro</string>
     <string name="system">Sistema</string>
     <string name="same_device_text">O mesmo que no dispositivo</string>
+    <string name="language_text">Língua</string>
+    <string name="determine_automatically">Determinar automaticamente</string>
 </resources>

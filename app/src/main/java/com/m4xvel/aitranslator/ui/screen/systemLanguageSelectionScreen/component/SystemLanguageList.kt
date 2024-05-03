@@ -1,6 +1,7 @@
 package com.m4xvel.aitranslator.ui.screen.systemLanguageSelectionScreen.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -67,6 +68,8 @@ fun SystemLanguageList(
                         )
                     )
                     .background(MaterialTheme.colorScheme.surface)
+                    .clickable(onClick = {
+                    })
             ) {
                 Row(
                     modifier = Modifier

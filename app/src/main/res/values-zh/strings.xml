@@ -18,9 +18,12 @@
     <string name="no_connection">没有连接</string>
     <string name="no_connection_text">检查网络连接并刷新页面</string>
     <string name="refresh_button">更新</string>
+    <string name="settings_text">设置</string>
     <string name="theme_design">主题设计</string>
     <string name="light">明亮</string>
     <string name="dark">黑暗</string>
     <string name="system">系统</string>
     <string name="same_device_text">与设备上的相同</string>
+    <string name="language_text">语言</string>
+    <string name="determine_automatically">自动确定</string>
 </resources>

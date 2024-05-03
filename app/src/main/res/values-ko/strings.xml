@@ -18,9 +18,12 @@
     <string name="no_connection">연결 없음</string>
     <string name="no_connection_text">네트워크 연결을 확인하고 페이지를 새로 고칩니다</string>
     <string name="refresh_button">업데이트</string>
+    <string name="settings_text">설정</string>
     <string name="theme_design">테마 디자인</string>
     <string name="light">밝은</string>
     <string name="dark">어두운</string>
     <string name="system">시스템</string>
     <string name="same_device_text">기기와 동일합니다</string>
+    <string name="language_text">언어</string>
+    <string name="determine_automatically">자동으로 결정하다</string>
 </resources>

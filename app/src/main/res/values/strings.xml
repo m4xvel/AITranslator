@@ -19,9 +19,12 @@
     <string name="no_connection">Нет соединения</string>
     <string name="no_connection_text">Проверьте соединение с сетью и обновите страницу</string>
     <string name="refresh_button">Обновить</string>
+    <string name="settings_text">Настройки</string>
     <string name="theme_design">Тема оформления</string>
     <string name="light">Светлая</string>
     <string name="dark">Темная</string>
     <string name="system">Системная</string>
     <string name="same_device_text">Такая же, как на устройстве</string>
+    <string name="language_text">Язык</string>
+    <string name="determine_automatically">Определять автоматически</string>
 </resources>

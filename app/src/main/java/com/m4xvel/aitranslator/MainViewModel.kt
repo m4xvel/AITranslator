@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieConstants
-import com.m4xvel.aitranslator.domain.repository.ApplicationSettingsRepository
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
+import com.m4xvel.aitranslator.domain.repository.ThemeSettingsRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
@@ -24,11 +24,11 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val transferRepository: TransferRepository,
-    private val defaultLanguageRepository: DefaultLanguageRepository,
     private val languageRepository: LanguageRepository,
+    private val defaultLanguageRepository: DefaultLanguageRepository,
     private val connectivityObserver: ConnectivityObserver,
     private val themeRepository: ThemeRepository,
-    private val applicationSettingsRepository: ApplicationSettingsRepository
+    private val themeSettingsRepository: ThemeSettingsRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DataState())
@@ -243,13 +243,13 @@ class MainViewModel(
         }
     }
 
-    fun setTheme(themeId: Long = applicationSettingsRepository.installTheme()) {
+    fun setTheme(themeId: Long = themeSettingsRepository.installTheme()) {
         _state.update {
             it.copy(
                 theme = themeRepository.installTheme(themeId)
             )
         }
-        applicationSettingsRepository.saveTheme(themeId)
+        themeSettingsRepository.saveTheme(themeId)
     }
 
     fun switch() {

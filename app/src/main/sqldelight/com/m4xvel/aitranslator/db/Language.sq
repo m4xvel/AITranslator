@@ -1,0 +1,20 @@
+import kotlin.Boolean;
+
+
+CREATE TABLE Language (
+    id INTEGER PRIMARY KEY,
+    language TEXT,
+    isActive INTEGER AS Boolean DEFAULT 0
+);
+
+saveLanguage:
+INSERT OR REPLACE
+INTO Language(
+    id,
+    language,
+    isActive
+) VALUES (1, ?, ?);
+
+installLanguage:
+SELECT language
+FROM Language;
