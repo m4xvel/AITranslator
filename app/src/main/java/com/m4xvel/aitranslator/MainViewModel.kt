@@ -2,6 +2,7 @@ package com.m4xvel.aitranslator
 
 import android.util.Log
 import android.view.View
+import androidx.compose.ui.text.intl.Locale
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
@@ -9,11 +10,13 @@ import androidx.lifecycle.viewModelScope
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
+import com.m4xvel.aitranslator.domain.repository.LanguageSettingsRepository
 import com.m4xvel.aitranslator.domain.repository.ThemeSettingsRepository
 import com.m4xvel.aitranslator.domain.repository.TransferRepository
 import com.m4xvel.aitranslator.ui.model.DataState
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
-import com.m4xvel.aitranslator.ui.screen.util.repository.DefaultLanguageRepository
+import com.m4xvel.aitranslator.ui.screen.util.repository.ControlLanguageRepository
+import com.m4xvel.aitranslator.ui.screen.util.repository.RestartAppRepository
 import com.m4xvel.aitranslator.ui.screen.util.repository.ThemeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,23 +24,38 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.parameter.parametersOf
 
 class MainViewModel(
     private val transferRepository: TransferRepository,
     private val languageRepository: LanguageRepository,
-    private val defaultLanguageRepository: DefaultLanguageRepository,
     private val connectivityObserver: ConnectivityObserver,
     private val themeRepository: ThemeRepository,
     private val themeSettingsRepository: ThemeSettingsRepository,
-) : ViewModel() {
+    private val languageSettingsRepository: LanguageSettingsRepository,
+    private val restartAppRepository: RestartAppRepository
+) : ViewModel(), KoinComponent {
 
     private val _state = MutableStateFlow(DataState())
     val state: StateFlow<DataState> = _state.asStateFlow()
+
+    private val controlLanguageRepository: ControlLanguageRepository by inject {
+        parametersOf(
+            languageSettingsRepository.installLanguage()
+        )
+    }
 
     init {
         getLanguage()
         statusNetwork()
         setTheme()
+        _state.update {
+            it.copy(
+                isChecked = languageSettingsRepository.installActive()
+            )
+        }
     }
 
     fun showTransfer() {
@@ -96,35 +114,33 @@ class MainViewModel(
     }
 
     private fun getLanguage() {
-        viewModelScope.launch {
-            val currentLanguage: String? = languageRepository.selectCurrentLanguage()
-            val translationLanguage: String? = languageRepository.selectTranslationLanguage()
-            if (currentLanguage != null && translationLanguage != null) {
-                _state.update {
-                    it.copy(
-                        currentLanguageKey = currentLanguage,
-                        currentLanguage = defaultLanguageRepository.getLocaleLanguage(
-                            currentLanguage
-                        ),
-                        translationLanguageKey = translationLanguage,
-                        translationLanguage = defaultLanguageRepository.getLocaleLanguage(
-                            translationLanguage
-                        )
+        val currentLanguage: String? = languageRepository.selectCurrentLanguage()
+        val translationLanguage: String? = languageRepository.selectTranslationLanguage()
+        if (currentLanguage != null && translationLanguage != null) {
+            _state.update {
+                it.copy(
+                    currentLanguageKey = currentLanguage,
+                    currentLanguage = controlLanguageRepository.getLocaleLanguage(
+                        currentLanguage
+                    ),
+                    translationLanguageKey = translationLanguage,
+                    translationLanguage = controlLanguageRepository.getLocaleLanguage(
+                        translationLanguage
                     )
-                }
-            } else {
-                _state.update {
-                    it.copy(
-                        currentLanguageKey = defaultLanguageRepository.getDefaultCurrentLanguage(),
-                        currentLanguage = defaultLanguageRepository.getLocaleLanguage(
-                            defaultLanguageRepository.getDefaultCurrentLanguage()
-                        ),
-                        translationLanguageKey = defaultLanguageRepository.getDefaultTranslationLanguage(),
-                        translationLanguage = defaultLanguageRepository.getLocaleLanguage(
-                            defaultLanguageRepository.getDefaultTranslationLanguage()
-                        )
+                )
+            }
+        } else {
+            _state.update {
+                it.copy(
+                    currentLanguageKey = controlLanguageRepository.getDefaultCurrentLanguage(),
+                    currentLanguage = controlLanguageRepository.getLocaleLanguage(
+                        controlLanguageRepository.getDefaultCurrentLanguage()
+                    ),
+                    translationLanguageKey = controlLanguageRepository.getDefaultTranslationLanguage(),
+                    translationLanguage = controlLanguageRepository.getLocaleLanguage(
+                        controlLanguageRepository.getDefaultTranslationLanguage()
                     )
-                }
+                )
             }
         }
         saveLanguage()
@@ -134,9 +150,9 @@ class MainViewModel(
         _state.update {
             it.copy(
                 currentLanguageKey = _state.value.translationLanguageKey,
-                currentLanguage = defaultLanguageRepository.getLocaleLanguage(_state.value.translationLanguageKey!!),
+                currentLanguage = controlLanguageRepository.getLocaleLanguage(_state.value.translationLanguageKey!!),
                 translationLanguageKey = _state.value.currentLanguageKey,
-                translationLanguage = defaultLanguageRepository.getLocaleLanguage(_state.value.currentLanguageKey!!)
+                translationLanguage = controlLanguageRepository.getLocaleLanguage(_state.value.currentLanguageKey!!)
             )
         }
         if (_state.value.showTranslationTextPanel) {
@@ -154,7 +170,7 @@ class MainViewModel(
         _state.update {
             it.copy(
                 currentLanguageKey = languageKey,
-                currentLanguage = defaultLanguageRepository.getLocaleLanguage(languageKey!!),
+                currentLanguage = controlLanguageRepository.getLocaleLanguage(languageKey!!),
             )
         }
         saveLanguage()
@@ -164,7 +180,7 @@ class MainViewModel(
         _state.update {
             it.copy(
                 translationLanguageKey = languageKey,
-                translationLanguage = defaultLanguageRepository.getLocaleLanguage(languageKey!!),
+                translationLanguage = controlLanguageRepository.getLocaleLanguage(languageKey!!),
             )
         }
         saveLanguage()
@@ -187,7 +203,7 @@ class MainViewModel(
     }
 
     fun getAllLanguages(): Map<String, String> {
-        return defaultLanguageRepository.getAllLanguage()
+        return controlLanguageRepository.getAllLanguage()
     }
 
     fun decreaseFont(): Int {
@@ -257,16 +273,35 @@ class MainViewModel(
             _state.update {
                 it.copy(
                     isChecked = true,
-                    isEnabled = false
+                    currentSystemLanguage = Locale.current.language
                 )
             }
         } else {
             _state.update {
                 it.copy(
-                    isChecked = false,
-                    isEnabled = true
+                    isChecked = false
                 )
             }
         }
     }
+
+    fun restartApp(language: String) {
+        languageSettingsRepository.saveLanguage(language, _state.value.isChecked)
+        restartAppRepository.restart()
+    }
+
+    fun updateSystemLanguage(language: String) {
+        _state.update {
+            it.copy(
+                currentSystemLanguage = language
+            )
+        }
+    }
+
+    fun currentLanguage(): String {
+        return controlLanguageRepository.getLocaleLanguage(
+            languageSettingsRepository.installLanguage()
+        ).toString()
+    }
+
 }

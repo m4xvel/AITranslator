@@ -18,14 +18,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.m4xvel.aitranslator.localDataState
 import com.m4xvel.aitranslator.localMainViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun SystemLanguageList() {
@@ -38,6 +41,8 @@ fun SystemLanguageList() {
     val languageFilter = language.filterValues { it.contains(state.searchLanguage) }
     val firstLanguage = language.values.toList().first()
     val lastLanguage = language.values.toList().last()
+
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -65,6 +70,13 @@ fun SystemLanguageList() {
                     )
                     .background(MaterialTheme.colorScheme.surface)
                     .clickable(onClick = {
+                        viewModel.updateSystemLanguage(language.key)
+                        scope.launch {
+                            state.snackbarHostState.showSnackbar(
+                                message = "",
+                                duration = SnackbarDuration.Indefinite
+                            )
+                        }
                     })
             ) {
                 Row(
@@ -92,5 +104,4 @@ fun SystemLanguageList() {
             }
         }
     }
-
 }

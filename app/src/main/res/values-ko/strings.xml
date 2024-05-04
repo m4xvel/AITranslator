@@ -26,4 +26,6 @@
     <string name="same_device_text">기기와 동일합니다</string>
     <string name="language_text">언어</string>
     <string name="determine_automatically">자동으로 결정하다</string>
+    <string name="restart_button">다시 시작하다</string>
+    <string name="restart_text">변경 사항은 다시 시작한 후에 적용됩니다</string>
 </resources>

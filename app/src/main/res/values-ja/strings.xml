@@ -26,4 +26,6 @@
     <string name="same_device_text">デバイスと同じ</string>
     <string name="language_text">言語</string>
     <string name="determine_automatically">自動的に決定する</string>
+    <string name="restart_button">再起動する</string>
+    <string name="restart_text">変更は再起動後に有効になります</string>
 </resources>

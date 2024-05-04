@@ -26,4 +26,6 @@
     <string name="same_device_text">La stessa dell`apparecchio</string>
     <string name="language_text">Lingua</string>
     <string name="determine_automatically">Determinare automaticamente</string>
+    <string name="restart_button">Riavviare</string>
+    <string name="restart_text">Le modifiche avranno effetto dopo il riavvio</string>
 </resources>

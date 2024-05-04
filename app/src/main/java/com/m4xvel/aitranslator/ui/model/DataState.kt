@@ -1,5 +1,6 @@
 package com.m4xvel.aitranslator.ui.model
 
+import androidx.compose.material3.SnackbarHostState
 import com.airbnb.lottie.compose.LottieClipSpec
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 import com.m4xvel.aitranslator.ui.theme.AppTheme
@@ -29,12 +30,14 @@ data class DataState(
     val searchLanguage: String = "",
 
     //Language
-    val currentSystemLanguage: String? = null,
+    val currentSystemLanguage: String = "en",
 
     //Theme
     val theme: AppTheme = AppTheme.Default,
 
     //SwitchButton
     val isChecked: Boolean = false,
-    val isEnabled: Boolean = true
+
+    //Snackbar
+    val snackbarHostState: SnackbarHostState = SnackbarHostState()
 )

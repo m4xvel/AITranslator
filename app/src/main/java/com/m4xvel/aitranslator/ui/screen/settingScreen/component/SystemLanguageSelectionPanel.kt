@@ -18,9 +18,11 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +36,7 @@ import com.m4xvel.aitranslator.localDataState
 import com.m4xvel.aitranslator.localMainViewModel
 import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.util.customElement.SwitchButton
+import kotlinx.coroutines.launch
 
 @Composable
 fun SystemLanguageSelectionPanel(navController: NavController) {
@@ -41,6 +44,8 @@ fun SystemLanguageSelectionPanel(navController: NavController) {
     val viewModel = localMainViewModel.current
 
     val state = localDataState.current
+
+    val scope = rememberCoroutineScope()
 
     Text(
         modifier = Modifier
@@ -73,6 +78,14 @@ fun SystemLanguageSelectionPanel(navController: NavController) {
                 isChecked = state.isChecked,
                 onClick = {
                     viewModel.switch()
+                    if (!state.isChecked) {
+                        scope.launch {
+                            state.snackbarHostState.showSnackbar(
+                                message = "",
+                                duration = SnackbarDuration.Indefinite
+                            )
+                        }
+                    }
                 }
             )
         }
@@ -90,20 +103,20 @@ fun SystemLanguageSelectionPanel(navController: NavController) {
             }
         },
         indication = LocalIndication.current,
-        enabled = state.isEnabled,
+        enabled = !state.isChecked,
         content = {
             Text(
-                text = "TEXT1",
+                text = viewModel.currentLanguage(),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(start = 20.dp)
             )
             Icon(
-                imageVector = if (!state.isEnabled) Icons.Default.Lock else Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                imageVector = if (state.isChecked) Icons.Default.Lock else Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(end = if (!state.isEnabled) 24.dp else 20.dp)
-                    .size(size = if (!state.isEnabled) 18.dp else 24.dp),
+                    .padding(end = if (state.isChecked) 24.dp else 20.dp)
+                    .size(size = if (state.isChecked) 18.dp else 24.dp),
                 tint = MaterialTheme.colorScheme.onBackground
             )
         }

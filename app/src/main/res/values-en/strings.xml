@@ -26,4 +26,6 @@
     <string name="same_device_text">The same as on the device</string>
     <string name="language_text">Language</string>
     <string name="determine_automatically">Determine automatically</string>
+    <string name="restart_button">Restart</string>
+    <string name="restart_text">Changes will take effect after reboot</string>
 </resources>

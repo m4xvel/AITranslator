@@ -26,4 +26,6 @@
     <string name="same_device_text">与设备上的相同</string>
     <string name="language_text">语言</string>
     <string name="determine_automatically">自动确定</string>
+    <string name="restart_button">重新启动</string>
+    <string name="restart_text">更改将在重新启动后生效</string>
 </resources>

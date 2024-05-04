@@ -18,3 +18,7 @@ INTO Language(
 installLanguage:
 SELECT language
 FROM Language;
+
+installActive:
+SELECT isActive
+FROM Language;

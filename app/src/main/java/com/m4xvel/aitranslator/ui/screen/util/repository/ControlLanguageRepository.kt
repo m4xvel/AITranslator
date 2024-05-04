@@ -1,6 +1,6 @@
 package com.m4xvel.aitranslator.ui.screen.util.repository
 
-interface DefaultLanguageRepository  {
+interface ControlLanguageRepository  {
 
     fun getAllLanguage(): Map<String, String>
 

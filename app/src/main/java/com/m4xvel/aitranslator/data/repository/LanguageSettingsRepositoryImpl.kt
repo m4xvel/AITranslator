@@ -1,9 +1,6 @@
 package com.m4xvel.aitranslator.data.repository
 
-import android.content.Context
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.m4xvel.aitranslator.data.Driver
-import com.m4xvel.aitranslator.db.Database
 import com.m4xvel.aitranslator.domain.repository.LanguageSettingsRepository
 import java.util.Locale
 
@@ -16,6 +13,10 @@ class LanguageSettingsRepositoryImpl(driver: Driver) : LanguageSettingsRepositor
             language = language,
             isActive = isActive
         )
+    }
+
+    override fun installActive(): Boolean {
+        return queries.installActive().executeAsOneOrNull()?.isActive ?: false
     }
 
     override fun installLanguage(): String {

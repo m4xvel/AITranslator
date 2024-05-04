@@ -4,9 +4,9 @@ import android.content.Context
 import com.m4xvel.aitranslator.R
 import java.util.Locale
 
-class DefaultLanguageRepositoryImpl(
+class ControlLanguageRepositoryImpl(
     context: Context
-) : DefaultLanguageRepository {
+) : ControlLanguageRepository {
 
     private val currentLanguage: String? = Locale.getDefault().language
 
