@@ -20,8 +20,7 @@ import com.m4xvel.aitranslator.ui.screen.systemLanguageSelectionScreen.component
 
 @Composable
 fun SystemLanguageSelectionScreen(
-    navController: NavController,
-    viewModel: MainViewModel
+    navController: NavController
 ) {
 
     Column(
@@ -42,8 +41,6 @@ fun SystemLanguageSelectionScreen(
                 }
             }
         )
-        SystemLanguageList(
-            viewModel = viewModel
-        )
+        SystemLanguageList()
     }
 }

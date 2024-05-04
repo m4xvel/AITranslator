@@ -11,7 +11,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreen
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelectionScreen
 import com.m4xvel.aitranslator.ui.screen.settingScreen.SettingScreen
@@ -23,7 +22,6 @@ fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     startDestination: String = NavigationItem.Home.route,
-    viewModel: MainViewModel
 ) {
 
     NavHost(
@@ -31,6 +29,7 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+
         composable(
             route = NavigationItem.Home.route,
             enterTransition = {
@@ -65,10 +64,7 @@ fun AppNavHost(
             }
         ) {
             StatusBarColor(navController = navController)
-            HomeScreen(
-                navController = navController,
-                viewModel = viewModel
-            )
+            HomeScreen(navController = navController)
         }
         composable(
             route = "${NavigationItem.LanguageSelection.route}/{text}/{id}",
@@ -105,8 +101,7 @@ fun AppNavHost(
             LanguageSelectionScreen(
                 navController = navController,
                 text = backStackEntry.arguments?.getString("text")!!,
-                id = backStackEntry.arguments?.getInt("id")!!,
-                viewModel = viewModel
+                id = backStackEntry.arguments?.getInt("id")!!
             )
         }
         composable(
@@ -131,10 +126,7 @@ fun AppNavHost(
             }
         ) {
             StatusBarColor(navController = navController)
-            SettingScreen(
-                viewModel = viewModel,
-                navController = navController
-            )
+            SettingScreen(navController = navController)
         }
         composable(
             route = NavigationItem.SystemLanguageSelection.route,
@@ -152,10 +144,7 @@ fun AppNavHost(
                 ExitTransition.None
             }
         ) {
-            SystemLanguageSelectionScreen(
-                viewModel = viewModel,
-                navController = navController
-            )
+            SystemLanguageSelectionScreen(navController = navController)
         }
     }
 }

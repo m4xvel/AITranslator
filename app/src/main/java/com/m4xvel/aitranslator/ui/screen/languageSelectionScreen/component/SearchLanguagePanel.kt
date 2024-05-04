@@ -17,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,17 +33,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
+import com.m4xvel.aitranslator.localDataState
+import com.m4xvel.aitranslator.localMainViewModel
 import com.m4xvel.aitranslator.ui.screen.util.KeyboardListener
-import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
-fun SearchLanguagePanel(
-    viewModel: MainViewModel
-) {
+fun SearchLanguagePanel() {
 
-    KeyboardListener(viewModel)
+    val viewModel = localMainViewModel.current
+
+    val state = localDataState.current
+
+    KeyboardListener()
 
     Box(
         modifier = Modifier
@@ -53,7 +54,6 @@ fun SearchLanguagePanel(
             .height(41.dp)
     ) {
 
-        val state by viewModel.state.collectAsState()
         val enabled by remember { mutableStateOf(true) }
         val color = MaterialTheme.colorScheme.onSurface
 

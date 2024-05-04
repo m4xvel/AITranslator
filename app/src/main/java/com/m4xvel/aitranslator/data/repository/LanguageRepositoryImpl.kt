@@ -1,27 +1,24 @@
 package com.m4xvel.aitranslator.data.repository
 
-import android.content.Context
-import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.m4xvel.aitranslator.db.Database
+import com.m4xvel.aitranslator.data.Driver
 import com.m4xvel.aitranslator.domain.repository.LanguageRepository
 
-class LanguageRepositoryImpl(context: Context) : LanguageRepository {
+class LanguageRepositoryImpl(driver: Driver) : LanguageRepository {
 
-    private val database = Database(AndroidSqliteDriver(Database.Schema, context, "database.db"))
+    private val queries = driver.database.databaseQueries
 
-    private val queries = database.databaseQueries
-    override suspend fun insertLanguage(currentLanguage: String?, translationLanguage: String?) {
+    override fun insertLanguage(currentLanguage: String?, translationLanguage: String?) {
         queries.insertLanguage(
             currentLanguage = currentLanguage,
             translationLanguage = translationLanguage
         )
     }
 
-    override suspend fun selectCurrentLanguage(): String? {
+    override fun selectCurrentLanguage(): String? {
         return queries.selectCurrentLanguage().executeAsOneOrNull()?.currentLanguage
     }
 
-    override suspend fun selectTranslationLanguage(): String? {
+    override fun selectTranslationLanguage(): String? {
         return queries.selectTranslationLanguage().executeAsOneOrNull()?.translationLanguage
     }
 }

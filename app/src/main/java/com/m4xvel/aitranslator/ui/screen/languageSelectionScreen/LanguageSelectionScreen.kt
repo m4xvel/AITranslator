@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.localMainViewModel
 import com.m4xvel.aitranslator.ui.navigation.TopNavBar
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.component.LanguageList
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.component.SearchLanguagePanel
@@ -21,9 +22,11 @@ import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.component.Searc
 fun LanguageSelectionScreen(
     navController: NavController,
     text: String,
-    id: Int,
-    viewModel: MainViewModel
+    id: Int
 ) {
+
+    val viewModel = localMainViewModel.current
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -42,12 +45,11 @@ fun LanguageSelectionScreen(
                 }
             }
         )
-        SearchLanguagePanel(viewModel = viewModel)
+        SearchLanguagePanel()
         LanguageList(
             language = viewModel.getAllLanguages(),
             id = id,
-            navController = navController,
-            viewModel = viewModel
+            navController = navController
         )
     }
 }

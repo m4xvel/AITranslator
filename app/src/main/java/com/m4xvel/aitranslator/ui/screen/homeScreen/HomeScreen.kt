@@ -9,12 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.localDataState
+import com.m4xvel.aitranslator.localMainViewModel
 import com.m4xvel.aitranslator.ui.animation.TranslateButton
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.CurrentTextPanel
 import com.m4xvel.aitranslator.ui.screen.homeScreen.component.InternetNoConnection
@@ -23,25 +22,20 @@ import com.m4xvel.aitranslator.ui.screen.homeScreen.component.TranslationTextPan
 import com.m4xvel.aitranslator.ui.screen.util.observerconnectivity.ConnectivityObserver
 
 @Composable
-fun HomeScreen(
-    navController: NavController,
-    viewModel: MainViewModel
-) {
+fun HomeScreen(navController: NavController) {
     Box(modifier = Modifier.fillMaxSize()) {
-        TranslationPanel(
-            navController = navController,
-            viewModel = viewModel
-        )
+        TranslationPanel(navController = navController)
     }
 }
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
-private fun TranslationPanel(
-    navController: NavController,
-    viewModel: MainViewModel
-) {
-    val state by viewModel.state.collectAsState()
+private fun TranslationPanel(navController: NavController) {
+
+    val viewModel = localMainViewModel.current
+
+    val state = localDataState.current
+
     val isConn = state.statusNetwork == ConnectivityObserver.Status.Available
 
     Column(
@@ -50,27 +44,17 @@ private fun TranslationPanel(
             .verticalScroll(rememberScrollState())
             .padding(start = 5.dp, end = 5.dp, top = 20.dp)
     ) {
-        LanguageSelectionPanel(
-            navController = navController,
-            viewModel = viewModel
-        )
-        CurrentTextPanel(
-            viewModel = viewModel
-        )
+        LanguageSelectionPanel(navController = navController)
+        CurrentTextPanel()
         TranslateButton(
-            isPlaying = state.isPlaying,
-            onClick = {
-                viewModel.showTransfer()
-            },
-            viewModel = viewModel
+            isPlaying = localDataState.current.isPlaying,
+            onClick = { viewModel.showTransfer() }
         )
         if (state.showTranslationTextPanel) {
-            TranslationTextPanel(
-                viewModel = viewModel
-            )
+            TranslationTextPanel()
         }
         if (!isConn) {
-            InternetNoConnection(viewModel)
+            InternetNoConnection()
         }
     }
 }

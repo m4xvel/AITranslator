@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -17,16 +16,18 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.localDataState
+import com.m4xvel.aitranslator.localMainViewModel
 
 @Composable
 fun TranslateButton(
     isPlaying: Boolean,
-    onClick: () -> Unit,
-    viewModel: MainViewModel
+    onClick: () -> Unit
 ) {
 
-    val state by viewModel.state.collectAsState()
+    val viewModel = localMainViewModel.current
+
+    val state = localDataState.current
 
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.Asset("animation-translate.json"))
 

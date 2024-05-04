@@ -22,12 +22,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
+import com.m4xvel.aitranslator.localMainViewModel
 import com.m4xvel.aitranslator.ui.theme.PrimaryColor
 
 @Composable
-fun InternetNoConnection(viewModel: MainViewModel) {
+fun InternetNoConnection() {
+
+    val viewModel = localMainViewModel.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()

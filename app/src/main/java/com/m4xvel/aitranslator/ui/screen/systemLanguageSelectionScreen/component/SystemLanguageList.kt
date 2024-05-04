@@ -20,27 +20,23 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.localDataState
+import com.m4xvel.aitranslator.localMainViewModel
 
 @Composable
-fun SystemLanguageList(
-    viewModel: MainViewModel
-) {
+fun SystemLanguageList() {
 
-    val state by viewModel.state.collectAsState()
+    val viewModel = localMainViewModel.current
+
+    val state = localDataState.current
 
     val language = viewModel.getAllLanguages()
-
     val languageFilter = language.filterValues { it.contains(state.searchLanguage) }
-
     val firstLanguage = language.values.toList().first()
-
     val lastLanguage = language.values.toList().last()
 
     Column(

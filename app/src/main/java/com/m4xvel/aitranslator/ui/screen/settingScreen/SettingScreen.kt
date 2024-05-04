@@ -16,10 +16,7 @@ import com.m4xvel.aitranslator.ui.screen.settingScreen.component.SystemLanguageS
 import com.m4xvel.aitranslator.ui.screen.settingScreen.component.ThemeSelectionPanel
 
 @Composable
-fun SettingScreen(
-    viewModel: MainViewModel,
-    navController: NavController
-) {
+fun SettingScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -30,11 +27,8 @@ fun SettingScreen(
                 .fillMaxWidth()
                 .padding(top = 32.dp, start = 15.dp, end = 15.dp)
         ) {
-            ThemeSelectionPanel(viewModel = viewModel)
-            SystemLanguageSelectionPanel(
-                viewModel = viewModel,
-                navController = navController
-            )
+            ThemeSelectionPanel()
+            SystemLanguageSelectionPanel(navController = navController)
         }
     }
 }

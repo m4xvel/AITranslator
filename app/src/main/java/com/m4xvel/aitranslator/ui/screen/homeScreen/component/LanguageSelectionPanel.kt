@@ -19,8 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,18 +28,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.m4xvel.aitranslator.MainViewModel
 import com.m4xvel.aitranslator.R
+import com.m4xvel.aitranslator.localDataState
+import com.m4xvel.aitranslator.localMainViewModel
 import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.util.ChangedRippleThemeAlpha
 
 @Composable
-fun LanguageSelectionPanel(
-    navController: NavController,
-    viewModel: MainViewModel
-) {
+fun LanguageSelectionPanel(navController: NavController) {
 
-    val state by viewModel.state.collectAsState()
+    val viewModel = localMainViewModel.current
+
+    val state = localDataState.current
 
     val languageFrom = stringResource(id = R.string.translate_from)
     val languageTo = stringResource(id = R.string.translate_to)

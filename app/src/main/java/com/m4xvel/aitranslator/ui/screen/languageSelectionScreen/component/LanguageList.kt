@@ -18,14 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.m4xvel.aitranslator.MainViewModel
+import com.m4xvel.aitranslator.localDataState
+import com.m4xvel.aitranslator.localMainViewModel
 import com.m4xvel.aitranslator.ui.navigation.Screen
 import com.m4xvel.aitranslator.ui.screen.util.ChangedRippleThemeAlpha
 import com.m4xvel.aitranslator.ui.theme.RippleColor
@@ -34,11 +33,12 @@ import com.m4xvel.aitranslator.ui.theme.RippleColor
 fun LanguageList(
     language: Map<String, String>,
     id: Int,
-    navController: NavController,
-    viewModel: MainViewModel
+    navController: NavController
 ) {
 
-    val state by viewModel.state.collectAsState()
+    val viewModel = localMainViewModel.current
+
+    val state = localDataState.current
 
     val languageFilter = language.filterValues { it.contains(state.searchLanguage) }
 
