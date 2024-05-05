@@ -2,7 +2,6 @@ package com.m4xvel.aitranslator
 
 import android.util.Log
 import android.view.View
-import androidx.compose.ui.text.intl.Locale
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
@@ -234,7 +233,7 @@ class MainViewModel(
     }
 
     fun statusNetwork() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Unconfined) {
             connectivityObserver.observe().collect { status ->
                 _state.update { it.copy(statusNetwork = status) }
                 if (_state.value.statusNetwork != ConnectivityObserver.Status.Available) {
@@ -268,12 +267,12 @@ class MainViewModel(
         themeSettingsRepository.saveTheme(themeId)
     }
 
-    fun switch() {
+    fun switch(language: String) {
         if (!_state.value.isChecked) {
             _state.update {
                 it.copy(
                     isChecked = true,
-                    currentSystemLanguage = Locale.current.language
+                    currentSystemLanguage = language
                 )
             }
         } else {
@@ -303,5 +302,4 @@ class MainViewModel(
             languageSettingsRepository.installLanguage()
         ).toString()
     }
-
 }

@@ -12,7 +12,7 @@ class ChatMessageProvider {
             ),
             ChatMessage(
                 role = ChatRole.User,
-                content = text
+                content = "Translation: $text"
             )
         )
     }

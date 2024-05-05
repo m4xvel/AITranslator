@@ -33,10 +33,8 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.m4xvel.aitranslator.R
@@ -80,12 +78,9 @@ fun CurrentTextPanel() {
 
         BasicTextField(
             singleLine = false,
-            value = TextFieldValue(
-                text = state.inputText,
-                selection = TextRange(state.inputText.length)
-            ),
+            value = state.inputText,
             onValueChange = {
-                viewModel.setInputText(it.text)
+                viewModel.setInputText(it)
             },
             modifier = Modifier
                 .fillMaxWidth()

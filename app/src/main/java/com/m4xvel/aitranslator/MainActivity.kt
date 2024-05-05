@@ -1,5 +1,7 @@
 package com.m4xvel.aitranslator
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -23,8 +25,11 @@ val localDataState = compositionLocalOf<DataState> {
 }
 
 class MainActivity : AppCompatActivity(), KoinComponent {
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val changeLanguageRepository: ChangeLanguageRepository by inject()
         val languageSettingsRepository: LanguageSettingsRepository by inject()
@@ -32,8 +37,10 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         changeLanguageRepository.changeLanguage(languageSettingsRepository.installLanguage())
 
         setContent {
+
             val viewModel: MainViewModel = koinViewModel()
             val state by viewModel.state.collectAsState()
+
             CompositionLocalProvider(
                 localMainViewModel provides viewModel,
                 localDataState provides state

@@ -4,12 +4,15 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.m4xvel.aitranslator.ui.screen.homeScreen.HomeScreen
 import com.m4xvel.aitranslator.ui.screen.languageSelectionScreen.LanguageSelectionScreen
@@ -23,6 +26,13 @@ fun AppNavHost(
     navController: NavHostController,
     startDestination: String = NavigationItem.Home.route,
 ) {
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    when (currentRoute) {
+        NavigationItem.Home.route -> StatusBarColor()
+        else -> StatusBarColor(MaterialTheme.colorScheme.surfaceContainerHigh)
+    }
 
     NavHost(
         modifier = modifier,
@@ -59,11 +69,15 @@ fun AppNavHost(
                         animationSpec = tween(200)
                     )
 
+                    NavigationItem.Home.route -> slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Start,
+                        animationSpec = tween(200)
+                    )
+
                     else -> ExitTransition.None
                 }
             }
         ) {
-            StatusBarColor(navController = navController)
             HomeScreen(navController = navController)
         }
         composable(
@@ -93,11 +107,16 @@ fun AppNavHost(
                         animationSpec = tween(200)
                     )
 
+                    NavigationItem.Home.route -> slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Up,
+                        animationSpec = tween(600)
+                    )
+
                     else -> ExitTransition.None
                 }
             }
         ) { backStackEntry ->
-            StatusBarColor(navController = navController)
+
             LanguageSelectionScreen(
                 navController = navController,
                 text = backStackEntry.arguments?.getString("text")!!,
@@ -125,7 +144,6 @@ fun AppNavHost(
                 ExitTransition.None
             }
         ) {
-            StatusBarColor(navController = navController)
             SettingScreen(navController = navController)
         }
         composable(
@@ -144,7 +162,7 @@ fun AppNavHost(
                 ExitTransition.None
             }
         ) {
-            SystemLanguageSelectionScreen(navController = navController)
+            SystemLanguageSelectionScreen()
         }
     }
 }

@@ -7,14 +7,10 @@ import com.m4xvel.aitranslator.MainActivity
 
 class RestartAppRepositoryImpl(private val context: Context) : RestartAppRepository {
     override fun restart() {
-        val intent = Intent(context, MainActivity::class.java)
-            .apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-        context.startActivity(intent)
-        if (context is Activity) {
-            (context as Activity).finish()
+        val intent = Intent(context, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
-        kotlin.system.exitProcess(0)
+        context.startActivity(intent as Intent)
+        (context as? Activity)?.finish()
     }
 }

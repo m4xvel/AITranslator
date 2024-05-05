@@ -6,12 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.m4xvel.aitranslator.MainViewModel
-import com.m4xvel.aitranslator.R
-import com.m4xvel.aitranslator.ui.navigation.TopNavBar
 import com.m4xvel.aitranslator.ui.screen.settingScreen.component.SystemLanguageSelectionPanel
 import com.m4xvel.aitranslator.ui.screen.settingScreen.component.ThemeSelectionPanel
 
@@ -21,7 +17,6 @@ fun SettingScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        TopNavBar(text = stringResource(id = R.string.settings_text))
         Column(
             modifier = Modifier
                 .fillMaxWidth()

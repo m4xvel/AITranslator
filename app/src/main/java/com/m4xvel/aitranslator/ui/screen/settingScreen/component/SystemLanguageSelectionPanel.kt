@@ -26,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,6 +47,8 @@ fun SystemLanguageSelectionPanel(navController: NavController) {
     val state = localDataState.current
 
     val scope = rememberCoroutineScope()
+
+    val language = LocalConfiguration.current.locales.toLanguageTags().split(",")
 
     Text(
         modifier = Modifier
@@ -77,7 +80,7 @@ fun SystemLanguageSelectionPanel(navController: NavController) {
             SwitchButton(
                 isChecked = state.isChecked,
                 onClick = {
-                    viewModel.switch()
+                    viewModel.switch(if (language.size > 1) language[1] else "")
                     if (!state.isChecked) {
                         scope.launch {
                             state.snackbarHostState.showSnackbar(

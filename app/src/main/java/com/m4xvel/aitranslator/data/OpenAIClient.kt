@@ -33,9 +33,8 @@ internal class OpenAIClient(
         return chatCompletionRequest {
             model = modelId
             messages = chatMessages
-            temperature = 0.7
-            topP = 1.0
-            maxTokens = 64
+            temperature = 0.1
+            maxTokens = 128
         }
     }
 }

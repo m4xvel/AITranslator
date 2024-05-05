@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.LocalRippleTheme
 import androidx.compose.material.ripple.RippleAlpha
@@ -48,9 +47,9 @@ fun LanguageSelectionPanel(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .height(41.dp)
-            .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 20.dp))
+            .clip(RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp))
             .background(color = MaterialTheme.colorScheme.secondary),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         CompositionLocalProvider(
             LocalRippleTheme provides ChangedRippleThemeAlpha(
@@ -59,6 +58,7 @@ fun LanguageSelectionPanel(navController: NavController) {
             )
         ) {
             LanguageItem(
+                modifier = Modifier.weight(1f),
                 onClick = {
                     navController.navigate(
                         route = "${Screen.LANGUAGE_SELECTION.name}/$languageFrom/${state.leftButtonID}"
@@ -78,6 +78,7 @@ fun LanguageSelectionPanel(navController: NavController) {
                 )
             }
             LanguageItem(
+                modifier = Modifier.weight(1f),
                 onClick = {
                     navController.navigate(
                         route = "${Screen.LANGUAGE_SELECTION.name}/$languageTo/${state.rightButtonID}"
@@ -92,9 +93,15 @@ fun LanguageSelectionPanel(navController: NavController) {
 }
 
 @Composable
-private fun LanguageItem(onClick: () -> Unit, shapeTopStart: Int, shapeTopEnd: Int, text: String) {
+private fun LanguageItem(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    shapeTopStart: Int,
+    shapeTopEnd: Int,
+    text: String
+) {
     Box(
-        modifier = Modifier.width(170.dp),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         TextButton(
