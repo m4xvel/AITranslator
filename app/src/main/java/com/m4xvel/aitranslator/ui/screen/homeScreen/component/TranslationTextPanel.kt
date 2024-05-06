@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,13 +40,12 @@ fun TranslationTextPanel() {
         modifier = Modifier
             .fillMaxWidth()
             .offset(y = (-60).dp)
-            .height(185.dp)
+            .height(IntrinsicSize.Min)
             .background(MaterialTheme.colorScheme.surface),
         content = {
 
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .height(149.dp)
                 .padding(top = 25.dp, start = 20.dp, end = 15.dp)
                 .verticalScroll(rememberScrollState()),
                 content = {

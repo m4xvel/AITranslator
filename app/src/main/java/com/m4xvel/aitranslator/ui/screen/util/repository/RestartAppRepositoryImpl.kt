@@ -10,7 +10,7 @@ class RestartAppRepositoryImpl(private val context: Context) : RestartAppReposit
         val intent = Intent(context, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
-        context.startActivity(intent as Intent)
+        context.startActivity(intent)
         (context as? Activity)?.finish()
     }
 }

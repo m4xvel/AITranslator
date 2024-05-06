@@ -4,7 +4,11 @@ import com.aallam.openai.api.chat.ChatMessage
 import com.aallam.openai.api.chat.ChatRole
 
 class ChatMessageProvider {
-    fun createChatMessages(sourceText: String, translatedText: String, text: String): List<ChatMessage> {
+    fun createChatMessages(
+        sourceText: String,
+        translatedText: String,
+        text: String
+    ): List<ChatMessage> {
         return mutableListOf(
             ChatMessage(
                 role = ChatRole.System,
@@ -12,7 +16,7 @@ class ChatMessageProvider {
             ),
             ChatMessage(
                 role = ChatRole.User,
-                content = "Translation: $text"
+                content = "Translate a text: $text"
             )
         )
     }

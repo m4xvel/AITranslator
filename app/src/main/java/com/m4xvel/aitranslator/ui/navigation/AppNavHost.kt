@@ -30,7 +30,7 @@ fun AppNavHost(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     when (currentRoute) {
-        NavigationItem.Home.route -> StatusBarColor()
+        NavigationItem.Home.route -> StatusBarColor(MaterialTheme.colorScheme.background)
         else -> StatusBarColor(MaterialTheme.colorScheme.surfaceContainerHigh)
     }
 
